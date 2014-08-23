@@ -6,10 +6,12 @@ import com.brunocascio.cualferiado.Entities.Feriado;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import com.brunocascio.cualferiado.Services.FeriadosREST.Status;
 
 /**
  * Created by d3m0n on 22/08/14.
@@ -38,7 +40,7 @@ public class FeriadosDB {
         service = restAdapter.create(FeriadosREST.class);
 
         // Verifico que si están actualizados
-        service.getLastUpdate(new Callback<FeriadosREST.Status>() {
+        service.getLastUpdate(new Callback<Status>() {
             @Override
             public void success(FeriadosREST.Status resp, Response response2) {
                 // Obtengo el tiempo en segundos de la última actualización
@@ -66,6 +68,9 @@ public class FeriadosDB {
 
                 // Guarda la colección de feriados
                 Feriado.saveInTx(L);
+
+                // Notifico que se actualizaron los feriados
+                EventBus.getDefault().postSticky(new SyncEvent());
             }
 
             @Override

@@ -12,12 +12,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.brunocascio.cualferiado.Entities.Feriado;
 
 import java.util.List;
 import java.util.Locale;
 
+import de.greenrobot.event.EventBus;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -25,6 +28,7 @@ import retrofit.client.Response;
 
 import com.brunocascio.cualferiado.Services.FeriadosDB;
 import com.brunocascio.cualferiado.Services.FeriadosREST;
+import com.brunocascio.cualferiado.Services.SyncEvent;
 
 
 public class MainActivity extends Activity {
@@ -132,26 +136,70 @@ public class MainActivity extends Activity {
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
+        private static TextView nFeriadoLabel;
+
+        private static View rootView;
+
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
         public static PlaceholderFragment newInstance(int sectionNumber) {
+
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
+
             return fragment;
         }
 
         public PlaceholderFragment() {
         }
 
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            // Registro como sucriptor
+            EventBus.getDefault().registerSticky(this);
+        }
+
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.current_fragment, container, false);
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+            rootView = inflater.inflate(R.layout.current_fragment, container, false);
+
+            // UI Components
+            nFeriadoLabel = (TextView) rootView.findViewById(R.id.nFeriado_label);
+
+            setFeriadoActual();
+
             return rootView;
+        }
+
+        public void onEvent(SyncEvent event){
+            Log.i("Debugeando", "Evento recibido en el fragmento feriado actual :)");
+
+            setFeriadoActual();
+            Toast.makeText(this.getActivity(), "Actualizado", Toast.LENGTH_SHORT).show();
+        }
+
+        public void onDestroy() {
+            super.onDestroy();
+
+            // Me desuscribo
+            EventBus.getDefault().unregister(this);
+        }
+
+        // Helpers
+
+        private static void setFeriadoActual(){
+
+            // Traigo el próximo feriado
+            Feriado lastFeriado = Feriado.getProximoFeriado();
+
+            // Seteo feriado al label
+            nFeriadoLabel.setText(lastFeriado.getDia()+"");
         }
     }
 

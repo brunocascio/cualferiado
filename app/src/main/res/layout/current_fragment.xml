@@ -9,9 +9,9 @@
     tools:context="com.brunocascio.cualferiado.MainActivity$PlaceholderFragment">
 
     <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Holaaaa" />
+        android:id="@+id/nFeriado_label"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>
