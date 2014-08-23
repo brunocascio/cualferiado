@@ -1,7 +1,5 @@
 package com.brunocascio.cualferiado.Entities;
 
-import android.util.Log;
-
 import com.orm.SugarRecord;
 
 import java.util.Calendar;

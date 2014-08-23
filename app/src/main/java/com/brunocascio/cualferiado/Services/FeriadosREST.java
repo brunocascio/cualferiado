@@ -5,7 +5,6 @@ import com.brunocascio.cualferiado.Entities.Feriado;
 import java.util.List;
 
 import retrofit.Callback;
-import retrofit.client.Response;
 import retrofit.http.GET;
 
 /**

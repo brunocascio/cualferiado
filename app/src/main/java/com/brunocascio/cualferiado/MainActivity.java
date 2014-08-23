@@ -16,19 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.brunocascio.cualferiado.Entities.Feriado;
+import com.brunocascio.cualferiado.Services.FeriadosDB;
+import com.brunocascio.cualferiado.Services.SyncEvent;
 
-import java.util.List;
 import java.util.Locale;
 
 import de.greenrobot.event.EventBus;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
-import com.brunocascio.cualferiado.Services.FeriadosDB;
-import com.brunocascio.cualferiado.Services.FeriadosREST;
-import com.brunocascio.cualferiado.Services.SyncEvent;
 
 
 public class MainActivity extends Activity {
@@ -53,9 +46,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Sincroniza el servidor con la base de datos
-        FeriadosDB.syncData();
-
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
@@ -63,6 +53,9 @@ public class MainActivity extends Activity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        // Sincroniza el servidor con la base de datos
+        FeriadosDB.syncData();
 
     }
 
@@ -117,10 +110,10 @@ public class MainActivity extends Activity {
             switch (position) {
                 case 0:
                     return getString(R.string.title_section1).toUpperCase(l);
-               /* case 1:
+                case 1:
                     return getString(R.string.title_section2).toUpperCase(l);
                 case 2:
-                    return getString(R.string.title_section3).toUpperCase(l);*/
+                    return getString(R.string.title_section3).toUpperCase(l);
             }
             return null;
         }
@@ -137,6 +130,7 @@ public class MainActivity extends Activity {
         private static final String ARG_SECTION_NUMBER = "section_number";
 
         private static TextView dFeriadoLabel;
+        private static TextView mFeriadoLabel;
 
         private static View rootView;
 
@@ -171,6 +165,7 @@ public class MainActivity extends Activity {
 
             // UI Components
             dFeriadoLabel = (TextView) rootView.findViewById(R.id.dFeriado_label);
+            mFeriadoLabel = (TextView) rootView.findViewById(R.id.mFeriado_label);
 
             // Inicializo el label "nFeriadoLabel" con el feriado actual
             setFeriadoActual();
@@ -182,6 +177,7 @@ public class MainActivity extends Activity {
             Log.i("Debugeando", "Evento recibido en el fragmento feriado actual :)");
 
             setFeriadoActual();
+
             Toast.makeText(this.getActivity(), "Actualizado", Toast.LENGTH_SHORT).show();
         }
 
@@ -203,6 +199,7 @@ public class MainActivity extends Activity {
 
             // Seteo feriado al label
             dFeriadoLabel.setText(lastFeriado.getDia()+"");
+            mFeriadoLabel.setText(lastFeriado.getMesString());
         }
     }
 

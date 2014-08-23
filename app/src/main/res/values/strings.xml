@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Cualferiado</string>
-    <string name="title_activity_main">Próxim</string>
+    <string name="title_activity_main">Cual Feriado</string>
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
