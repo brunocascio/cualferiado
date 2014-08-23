@@ -70,8 +70,6 @@ public class Feriado extends SugarRecord<Feriado> {
 
         List<Feriado> L = Feriado.find(Feriado.class, "mes >= ? AND dia > ?", s, null, "mes ASC", "1");
 
-        Log.i("Actual Fecha: ", L.get(0).getMes()+"");
-
         if ( !L.isEmpty() ) {
             return L.get(0);
         }
