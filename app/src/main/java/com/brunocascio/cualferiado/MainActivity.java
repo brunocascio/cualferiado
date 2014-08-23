@@ -102,13 +102,13 @@ public class MainActivity extends Activity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            return FeriadoActualFragment.newInstance(position + 1);
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            // Show 1 total pages.
+            return 1;
         }
 
         @Override
@@ -117,10 +117,10 @@ public class MainActivity extends Activity {
             switch (position) {
                 case 0:
                     return getString(R.string.title_section1).toUpperCase(l);
-                case 1:
+               /* case 1:
                     return getString(R.string.title_section2).toUpperCase(l);
                 case 2:
-                    return getString(R.string.title_section3).toUpperCase(l);
+                    return getString(R.string.title_section3).toUpperCase(l);*/
             }
             return null;
         }
@@ -129,14 +129,14 @@ public class MainActivity extends Activity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class FeriadoActualFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
-        private static TextView nFeriadoLabel;
+        private static TextView dFeriadoLabel;
 
         private static View rootView;
 
@@ -144,9 +144,9 @@ public class MainActivity extends Activity {
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
+        public static FeriadoActualFragment newInstance(int sectionNumber) {
 
-            PlaceholderFragment fragment = new PlaceholderFragment();
+            FeriadoActualFragment fragment = new FeriadoActualFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
@@ -154,7 +154,7 @@ public class MainActivity extends Activity {
             return fragment;
         }
 
-        public PlaceholderFragment() {
+        public FeriadoActualFragment() {
         }
 
         public void onCreate(Bundle savedInstanceState) {
@@ -170,8 +170,9 @@ public class MainActivity extends Activity {
             rootView = inflater.inflate(R.layout.current_fragment, container, false);
 
             // UI Components
-            nFeriadoLabel = (TextView) rootView.findViewById(R.id.nFeriado_label);
+            dFeriadoLabel = (TextView) rootView.findViewById(R.id.dFeriado_label);
 
+            // Inicializo el label "nFeriadoLabel" con el feriado actual
             setFeriadoActual();
 
             return rootView;
@@ -191,7 +192,9 @@ public class MainActivity extends Activity {
             EventBus.getDefault().unregister(this);
         }
 
-        // Helpers
+        // --------------------------------------
+        //      Helpers
+        // --------------------------------------
 
         private static void setFeriadoActual(){
 
@@ -199,7 +202,7 @@ public class MainActivity extends Activity {
             Feriado lastFeriado = Feriado.getProximoFeriado();
 
             // Seteo feriado al label
-            nFeriadoLabel.setText(lastFeriado.getDia()+"");
+            dFeriadoLabel.setText(lastFeriado.getDia()+"");
         }
     }
 
