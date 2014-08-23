@@ -9,7 +9,7 @@
     tools:context="com.brunocascio.cualferiado.MainActivity$FeriadoActualFragment">
 
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center_vertical|center_horizontal">
@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/mFeriado_label"
-            android:textSize="30sp" />
+            android:textSize="50sp" />
     </LinearLayout>
 
 </RelativeLayout>

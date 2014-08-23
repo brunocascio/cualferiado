@@ -3,6 +3,7 @@ package com.brunocascio.cualferiado;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -54,9 +55,15 @@ public class MainActivity extends Activity {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        // Sincroniza el servidor con la base de datos
-        FeriadosDB.syncData();
+        if( savedInstanceState == null ) {
+            FeriadosDB.syncData();
+        }
 
+    }
+
+    protected void onSaveInstanceState(Bundle icicle) {
+        super.onSaveInstanceState(icicle);
+        icicle.putBoolean("ServerBeforeLoaded", true);
     }
 
 
@@ -149,6 +156,7 @@ public class MainActivity extends Activity {
         }
 
         public FeriadoActualFragment() {
+            setRetainInstance(true);
         }
 
         public void onCreate(Bundle savedInstanceState) {
