@@ -61,12 +61,12 @@ public class Feriado extends SugarRecord<Feriado> {
 
     public static Feriado getProximoFeriado() {
         Calendar calendar = Calendar.getInstance();
-        String month = (calendar.get(Calendar.MONTH) + 1)+""; // Arranca en 0
-        String day   = (calendar.get(Calendar.DAY_OF_MONTH))+"";
+        String month = Integer.toString(calendar.get(Calendar.MONTH) + 1); // Arranca en 0
+        String day   = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
 
-        String [] s = {month, day};
+        String [] s = {month, day, month};
 
-        List<Feriado> L = Feriado.find(Feriado.class, "mes >= ? AND dia > ?", s, null, "mes ASC", "1");
+        List<Feriado> L = Feriado.find(Feriado.class,"mes = ? AND dia > ? OR mes > ?", s, null,"mes ASC, dia ASC", "1");
 
         if ( !L.isEmpty() ) {
             return L.get(0);
