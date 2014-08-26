@@ -1,12 +1,12 @@
 package com.brunocascio.cualferiado;
 
-import android.app.Activity;
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,13 +20,16 @@ import android.widget.Toast;
 import com.brunocascio.cualferiado.Entities.Feriado;
 import com.brunocascio.cualferiado.Services.FeriadosDB;
 import com.brunocascio.cualferiado.Services.SyncEvent;
+import com.roomorama.caldroid.CaldroidFragment;
+import com.roomorama.caldroid.CaldroidListener;
 
+import java.util.Date;
 import java.util.Locale;
 
 import de.greenrobot.event.EventBus;
 
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -48,6 +51,10 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Set up the action bar.
+        final ActionBar actionBar = getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
@@ -55,6 +62,28 @@ public class MainActivity extends FragmentActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        // When swiping between different sections, select the corresponding
+        // tab. We can also use ActionBar.Tab#select() to do this if we have
+        // a reference to the Tab.
+        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                actionBar.setSelectedNavigationItem(position);
+            }
+        });
+
+        // For each of the sections in the app, add a tab to the action bar.
+        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
+            // Create a tab with text corresponding to the page title defined by
+            // the adapter. Also specify this Activity object, which implements
+            // the TabListener interface, as the callback (listener) for when
+            // this tab is selected.
+            actionBar.addTab(
+                    actionBar.newTab()
+                            .setText(mSectionsPagerAdapter.getPageTitle(i))
+                            .setTabListener(this));
+        }
 
         if( savedInstanceState == null ) {
             FeriadosDB.syncData(getApplicationContext());
@@ -87,6 +116,21 @@ public class MainActivity extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, android.app.FragmentTransaction fragmentTransaction) {
+        // When the given tab is selected, switch to the corresponding page in
+        // the ViewPager.
+        mViewPager.setCurrentItem(tab.getPosition());
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, android.app.FragmentTransaction fragmentTransaction) {
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, android.app.FragmentTransaction fragmentTransaction) {
+    }
+
     
 
     /**
@@ -107,7 +151,7 @@ public class MainActivity extends FragmentActivity {
                 case 0:
                     return FeriadoActualFragment.newInstance();
                 case 1:
-                    return CalendarioFragment.newInstance();
+                    return new CalendarioFragment();
                 default:
                     return FeriadoActualFragment.newInstance();
             }
@@ -214,22 +258,46 @@ public class MainActivity extends FragmentActivity {
      * Fragmento que muestra el calendario
      *
      */
-    public static class CalendarioFragment extends Fragment {
+    public class CalendarioFragment extends Fragment {
 
         private View rootView;
 
-        public static CalendarioFragment newInstance() {
+        private CaldroidFragment calendario;
 
-            CalendarioFragment fragment = new CalendarioFragment();
-
-            return fragment;
+        public CalendarioFragment(){
+            Log.i("instancia","instancia nueva");
+            // Registro como sucriptor
+            EventBus.getDefault().registerSticky(this);
         }
 
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
-            // Registro como sucriptor
-            EventBus.getDefault().registerSticky(this);
+            calendario = new CaldroidFragment();
+
+            FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+            t.replace(R.id.container_calendar, calendario);
+            t.commit();
+
+            calendario.setBackgroundResourceForDate(R.color.blue, new Date());
+
+            calendario.setCaldroidListener(new CaldroidListener() {
+
+                @Override
+                public void onSelectDate(Date date, View view) {
+                    Toast.makeText(getApplicationContext(),date.toString(),Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onChangeMonth(int month, int year) {}
+
+                @Override
+                public void onLongClickDate(Date date, View view) {}
+
+                @Override
+                public void onCaldroidViewCreated() {}
+
+            });
         }
 
         @Override
