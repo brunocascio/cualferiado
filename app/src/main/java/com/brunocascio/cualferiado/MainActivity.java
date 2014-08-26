@@ -218,11 +218,6 @@ public class MainActivity extends FragmentActivity {
 
         private View rootView;
 
-        public CalendarioFragment() {
-
-            setRetainInstance(true);
-        }
-
         public static CalendarioFragment newInstance() {
 
             CalendarioFragment fragment = new CalendarioFragment();
