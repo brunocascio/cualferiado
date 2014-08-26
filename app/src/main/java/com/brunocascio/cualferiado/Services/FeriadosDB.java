@@ -1,5 +1,9 @@
 package com.brunocascio.cualferiado.Services;
 
+import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences.Editor;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.brunocascio.cualferiado.Entities.Feriado;
@@ -16,11 +20,12 @@ import com.brunocascio.cualferiado.Services.FeriadosREST.Status;
 /**
  * Created by d3m0n on 22/08/14.
  */
-public class FeriadosDB {
+public class FeriadosDB extends Application {
 
     private static RestAdapter restAdapter;
     private static FeriadosREST service;
     private static long lastCheck;
+    private static SharedPreferences preferences;
 
 
     /*
@@ -30,7 +35,9 @@ public class FeriadosDB {
      *
      *  @return void
      */
-    public static void syncData(){
+    public static void syncData(Context context){
+
+        preferences = context.getApplicationContext().getSharedPreferences("dataServer", 0);
 
         restAdapter = new RestAdapter.Builder()
                 .setEndpoint(FeriadosREST.SERVICE_ENDPOINT)
@@ -39,7 +46,7 @@ public class FeriadosDB {
 
         service = restAdapter.create(FeriadosREST.class);
 
-        // Verifico que si están actualizados
+        // Obtengo ùltima actualización del servidor
         service.getLastUpdate(new Callback<Status>() {
             @Override
             public void success(FeriadosREST.Status resp, Response response2) {
@@ -53,32 +60,50 @@ public class FeriadosDB {
             }
         });
 
+        // obtengo la última actualización del dispositivo
+        long lastUpdate = preferences.getLong("lastUpdate", 0);
 
-        //
-        // Guardo los feriados en la base de datos.
-        // Para ello utilizo un bulk insert para no sobrecargar la DB
-        //
-        service.getFeriados(new Callback<List<Feriado>>() {
+        /*
+         *  Comparo si es la primera vez que se cargan,
+         *  o bien los feriados estan desactualizados.
+         */
+        if ( lastUpdate == 0 || lastUpdate < lastCheck)
+        {
+            //
+            // Guardo los feriados en la base de datos.
+            // Para ello utilizo un bulk insert para no sobrecargar la DB
+            //
+            service.getFeriados(new Callback<List<Feriado>>() {
 
-            @Override
-            public void success(List<Feriado> L, Response response) {
+                @Override
+                public void success(List<Feriado> L, Response response) {
 
-                // Elimino todos los feriados para actualizarlos
-                Feriado.deleteAll(Feriado.class);
+                    // Elimino todos los feriados para actualizarlos
+                    Feriado.deleteAll(Feriado.class);
 
-                // Guarda la colección de feriados
-                Feriado.saveInTx(L);
+                    // Guarda la colección de feriados
+                    Feriado.saveInTx(L);
 
-                // Notifico que se actualizaron los feriados
-                EventBus.getDefault().postSticky(new SyncEvent());
-            }
+                    // Guardo esta última actualización
+                    Editor edit = preferences.edit();
+                    edit.clear();
+                    edit.putLong("lastUpdate", lastCheck);
+                    edit.commit();
 
-            @Override
-            public void failure(RetrofitError error) {
+                    // Notifico que se actualizaron los feriados
+                    EventBus.getDefault().postSticky(new SyncEvent());
+                }
 
-                Log.e("Error en la petición!", error.getMessage());
-            }
-        });
+                @Override
+                public void failure(RetrofitError error) {
+
+                    Log.e("Error en la petición!", error.getMessage());
+                }
+            });
+
+        } else {
+            Log.i("Actualizacion no requerida", "ok");
+        }
 
     }
 

@@ -60,18 +60,25 @@ public class Feriado extends SugarRecord<Feriado> {
     }
 
     public static Feriado getProximoFeriado() {
+
         Calendar calendar = Calendar.getInstance();
-        String month = Integer.toString(calendar.get(Calendar.MONTH) + 1); // Arranca en 0
-        String day   = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
 
-        String [] s = {month, day, month};
+        String currentMonth = Integer.toString(calendar.get(Calendar.MONTH) + 1); // Arranca en 0
+        String currentDay   = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
 
-        List<Feriado> L = Feriado.find(Feriado.class,"mes = ? AND dia > ? OR mes > ?", s, null,"mes ASC, dia ASC", "1");
+        List<Feriado> L = Feriado.find(Feriado.class,
+                "mes = ? AND dia > ? OR mes > ?",                     // query
+                new String[]{currentMonth, currentDay, currentMonth}, // parameters
+                null,                                                 // groupby
+                "mes ASC, dia ASC",                                   // order
+                "1"                                                   // limit
+        );
 
         if ( !L.isEmpty() ) {
             return L.get(0);
         }
 
+        // Si no existe próximo feriado, retorno el primero del año
         return new Feriado(1,1,"Año Nuevo","innamovible",null);
     }
 

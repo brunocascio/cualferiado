@@ -56,7 +56,7 @@ public class MainActivity extends Activity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         if( savedInstanceState == null ) {
-            FeriadosDB.syncData();
+            FeriadosDB.syncData(getApplicationContext());
         }
 
     }
@@ -191,7 +191,6 @@ public class MainActivity extends Activity {
 
         public void onDestroy() {
             super.onDestroy();
-
             // Me desuscribo
             EventBus.getDefault().unregister(this);
         }
@@ -202,7 +201,7 @@ public class MainActivity extends Activity {
 
         private static void setFeriadoActual(){
 
-            // Traigo el próximo feriado
+            // Traigo el próximo feriado de la DB
             Feriado lastFeriado = Feriado.getProximoFeriado();
 
             // Seteo feriado al label
