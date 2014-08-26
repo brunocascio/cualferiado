@@ -93,7 +93,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
     protected void onSaveInstanceState(Bundle icicle) {
         super.onSaveInstanceState(icicle);
-        icicle.putBoolean("ServerBeforeLoaded", true);
     }
 
 
@@ -261,11 +260,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public class CalendarioFragment extends Fragment {
 
         private View rootView;
-
         private CaldroidFragment calendario;
 
         public CalendarioFragment(){
             Log.i("instancia","instancia nueva");
+            setRetainInstance(true);
             // Registro como sucriptor
             EventBus.getDefault().registerSticky(this);
         }
@@ -273,31 +272,41 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
-            calendario = new CaldroidFragment();
+            // If Activity is created after rotation
+            if (savedInstanceState != null) {
+                calendario.restoreStatesFromKey(savedInstanceState,
+                        "CALDROID_SAVED_STATE");
+            } else {
 
-            FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-            t.replace(R.id.container_calendar, calendario);
-            t.commit();
+                calendario = new CaldroidFragment();
 
-            calendario.setBackgroundResourceForDate(R.color.blue, new Date());
+                FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+                t.replace(R.id.container_calendar, calendario);
+                t.commit();
 
-            calendario.setCaldroidListener(new CaldroidListener() {
+                calendario.setBackgroundResourceForDate(R.color.blue, new Date());
 
-                @Override
-                public void onSelectDate(Date date, View view) {
-                    Toast.makeText(getApplicationContext(),date.toString(),Toast.LENGTH_LONG).show();
-                }
+                calendario.setCaldroidListener(new CaldroidListener() {
 
-                @Override
-                public void onChangeMonth(int month, int year) {}
+                    @Override
+                    public void onSelectDate(Date date, View view) {
+                        Toast.makeText(getApplicationContext(), date.toString(), Toast.LENGTH_LONG).show();
+                    }
 
-                @Override
-                public void onLongClickDate(Date date, View view) {}
+                    @Override
+                    public void onChangeMonth(int month, int year) {
+                    }
 
-                @Override
-                public void onCaldroidViewCreated() {}
+                    @Override
+                    public void onLongClickDate(Date date, View view) {
+                    }
 
-            });
+                    @Override
+                    public void onCaldroidViewCreated() {
+                    }
+
+                });
+            }
         }
 
         @Override
@@ -310,6 +319,19 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         public void onEvent(SyncEvent event){
             Log.i("Debugeando", "Evento recibido en el fragmento de calendario :)");
+        }
+
+        public void onSaveInstanceState(Bundle outState) {
+            super.onSaveInstanceState(outState);
+
+            if (calendario != null) {
+                calendario.saveStatesToKey(outState, "CALDROID_SAVED_STATE");
+            }
+
+            if (calendario != null) {
+                calendario.saveStatesToKey(outState,
+                        "DIALOG_CALDROID_SAVED_STATE");
+            }
         }
 
         public void onDestroy() {
