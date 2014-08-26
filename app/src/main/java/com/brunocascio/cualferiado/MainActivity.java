@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,7 +26,7 @@ import java.util.Locale;
 import de.greenrobot.event.EventBus;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -101,14 +102,21 @@ public class MainActivity extends Activity {
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return FeriadoActualFragment.newInstance(position + 1);
+            // Return a FeriadoActualFragment (defined as a static inner class below).
+            switch (position) {
+                case 0:
+                    return FeriadoActualFragment.newInstance();
+                case 1:
+                    return CalendarioFragment.newInstance();
+                default:
+                    return FeriadoActualFragment.newInstance();
+            }
         }
 
         @Override
         public int getCount() {
             // Show 1 total pages.
-            return 1;
+            return 2;
         }
 
         @Override
@@ -116,52 +124,42 @@ public class MainActivity extends Activity {
             Locale l = Locale.getDefault();
             switch (position) {
                 case 0:
-                    return getString(R.string.title_section1).toUpperCase(l);
+                    return getString(R.string.title_next_section).toUpperCase(l);
                 case 1:
-                    return getString(R.string.title_section2).toUpperCase(l);
-                case 2:
-                    return getString(R.string.title_section3).toUpperCase(l);
+                    return getString(R.string.title_calendar_section).toUpperCase(l);
             }
             return null;
         }
     }
 
+
+
     /**
-     * A placeholder fragment containing a simple view.
+     *
+     * Fragmento que muestra el proximo feriado
+     *
      */
     public static class FeriadoActualFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
 
         private static TextView dFeriadoLabel;
         private static TextView mFeriadoLabel;
 
         private static View rootView;
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static FeriadoActualFragment newInstance(int sectionNumber) {
+        public static FeriadoActualFragment newInstance() {
 
             FeriadoActualFragment fragment = new FeriadoActualFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
 
             return fragment;
         }
 
         public FeriadoActualFragment() {
+
             setRetainInstance(true);
         }
 
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-
             // Registro como sucriptor
             EventBus.getDefault().registerSticky(this);
         }
@@ -207,6 +205,54 @@ public class MainActivity extends Activity {
             // Seteo feriado al label
             dFeriadoLabel.setText(lastFeriado.getDia()+"");
             mFeriadoLabel.setText(lastFeriado.getMesString());
+        }
+    }
+
+
+    /**
+     *
+     * Fragmento que muestra el calendario
+     *
+     */
+    public static class CalendarioFragment extends Fragment {
+
+        private View rootView;
+
+        public CalendarioFragment() {
+
+            setRetainInstance(true);
+        }
+
+        public static CalendarioFragment newInstance() {
+
+            CalendarioFragment fragment = new CalendarioFragment();
+
+            return fragment;
+        }
+
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            // Registro como sucriptor
+            EventBus.getDefault().registerSticky(this);
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+            rootView = inflater.inflate(R.layout.fragment_calendario, container, false);
+
+            return rootView;
+        }
+
+        public void onEvent(SyncEvent event){
+            Log.i("Debugeando", "Evento recibido en el fragmento de calendario :)");
+        }
+
+        public void onDestroy() {
+            super.onDestroy();
+            // Me desuscribo
+            EventBus.getDefault().unregister(this);
         }
     }
 

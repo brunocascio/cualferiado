@@ -69,6 +69,7 @@ public class FeriadosDB extends Application {
          */
         if ( lastUpdate == 0 || lastUpdate < lastCheck)
         {
+            Log.i("Requiere sincronización?", "SI");
             //
             // Guardo los feriados en la base de datos.
             // Para ello utilizo un bulk insert para no sobrecargar la DB
@@ -102,7 +103,7 @@ public class FeriadosDB extends Application {
             });
 
         } else {
-            Log.i("Actualizacion no requerida", "ok");
+            Log.i("Requiere sincronización?", "NO");
         }
 
     }
