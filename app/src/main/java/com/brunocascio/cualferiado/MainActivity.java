@@ -23,7 +23,10 @@ import com.brunocascio.cualferiado.Services.SyncEvent;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 
 import de.greenrobot.event.EventBus;
@@ -261,12 +264,19 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         private View rootView;
         private CaldroidFragment calendario;
+        private Iterator<Feriado> feriados;
+        private long total;
 
-        public CalendarioFragment(){
+        public CalendarioFragment()
+        {
             Log.i("instancia","instancia nueva");
-            setRetainInstance(true);
+
+            this.total = 0;
+
             // Registro como sucriptor
             EventBus.getDefault().registerSticky(this);
+
+            setRetainInstance(true);
         }
 
         public void onCreate(Bundle savedInstanceState) {
@@ -284,7 +294,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 t.replace(R.id.container_calendar, calendario);
                 t.commit();
 
+                // Set color to actual date
                 calendario.setBackgroundResourceForDate(R.color.blue, new Date());
+
+                if ( total == 0)
+                    this.setColorsDates();
 
                 calendario.setCaldroidListener(new CaldroidListener() {
 
@@ -309,6 +323,32 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             }
         }
 
+        /*****************************
+        ** Set color for all holidays
+        ******************************
+        */
+        private void setColorsDates() {
+
+            total = Feriado.count(Feriado.class,null,null);
+
+            if ( total > 0) {
+
+                feriados = Feriado.findAll(Feriado.class);
+
+                Calendar calendar = Calendar.getInstance();
+
+                while (feriados.hasNext()) {
+                    Feriado F = feriados.next();
+                    calendar.set(calendar.get(Calendar.YEAR), F.getMes() - 1, F.getDia());
+                    calendario.setBackgroundResourceForDate(
+                            R.color.green,
+                            new Date(calendar.getTimeInMillis())
+                    );
+                }
+                calendario.refreshView();
+            }
+        }
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -319,6 +359,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         public void onEvent(SyncEvent event){
             Log.i("Debugeando", "Evento recibido en el fragmento de calendario :)");
+            this.setColorsDates();
         }
 
         public void onSaveInstanceState(Bundle outState) {

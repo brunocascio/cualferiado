@@ -97,8 +97,7 @@ public class FeriadosDB extends Application {
 
                 @Override
                 public void failure(RetrofitError error) {
-
-                    Log.e("Error en la petición!", error.getMessage());
+                    Log.e("Error en la petición!", "Error al peticionar al servidor");
                 }
             });
 
