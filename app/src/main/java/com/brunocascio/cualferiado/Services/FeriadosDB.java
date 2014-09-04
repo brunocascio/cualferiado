@@ -88,8 +88,8 @@ public class FeriadosDB extends Application {
                     // Guardo esta última actualización
                     Editor edit = preferences.edit();
                     edit.clear();
-                    edit.putLong("lastUpdate", lastCheck);
                     edit.commit();
+                    edit.putLong("lastUpdate", lastCheck);
 
                     // Notifico que se actualizaron los feriados
                     EventBus.getDefault().postSticky(new SyncEvent());

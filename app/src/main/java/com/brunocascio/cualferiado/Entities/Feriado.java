@@ -12,15 +12,17 @@ public class Feriado extends SugarRecord<Feriado> {
 
     private int dia;
     private int mes;
+    private int traslado;
     private String motivo;
     private String tipo;
     private Opcional opcional;
 
     public Feriado() {}
 
-    public Feriado(int dia, int mes, String motivo, String tipo, Opcional opcional) {
+    public Feriado(int dia, int mes, int traslado, String motivo, String tipo, Opcional opcional) {
         this.dia      = dia;
         this.mes      = mes;
+        this.traslado = traslado;
         this.motivo   = motivo;
         this.tipo     = tipo;
         this.opcional = opcional;
@@ -34,6 +36,10 @@ public class Feriado extends SugarRecord<Feriado> {
         return this.mes;
     }
 
+    public int getTraslado(){
+        return this.traslado;
+    }
+
     public String getMotivo(){
         return this.motivo;
     }
@@ -42,8 +48,8 @@ public class Feriado extends SugarRecord<Feriado> {
         return this.tipo;
     }
 
-    public Opcional getOpcional(){
-        return this.opcional;
+    public Boolean hasOpcional(){
+        return this.opcional != null;
     }
 
 
@@ -67,7 +73,7 @@ public class Feriado extends SugarRecord<Feriado> {
         String currentDay   = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
 
         List<Feriado> L = Feriado.find(Feriado.class,
-                "mes = ? AND dia > ? OR mes > ?",                     // query
+                "(mes = ?) AND (dia > ? OR mes > ?)",                 // query
                 new String[]{currentMonth, currentDay, currentMonth}, // parameters
                 null,                                                 // groupby
                 "mes ASC, dia ASC",                                   // order
@@ -79,7 +85,35 @@ public class Feriado extends SugarRecord<Feriado> {
         }
 
         // Si no existe próximo feriado, retorno el primero del año
-        return new Feriado(1,1,"Año Nuevo","innamovible",null);
+        return new Feriado(1,1,0,"Año Nuevo","innamovible",null);
+    }
+
+
+    class Opcional extends SugarRecord<Opcional> {
+
+        private String tipo;
+        private String religion;
+        private String origen;
+
+        public Opcional() {}
+
+        public Opcional(String tipo, String religion, String origen) {
+            this.tipo     = tipo;
+            this.religion = religion;
+            this.origen   = origen;
+        }
+
+        public String getTipo(){
+            return this.tipo;
+        }
+
+        public String getReligion(){
+            return this.religion;
+        }
+
+        public String getOrigen(){
+            return this.origen;
+        }
     }
 
 }

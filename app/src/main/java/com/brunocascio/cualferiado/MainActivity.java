@@ -337,14 +337,46 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
                 Calendar calendar = Calendar.getInstance();
 
-                while (feriados.hasNext()) {
+                while (feriados.hasNext())
+                {
                     Feriado F = feriados.next();
                     calendar.set(calendar.get(Calendar.YEAR), F.getMes() - 1, F.getDia());
-                    calendario.setBackgroundResourceForDate(
-                            R.color.green,
-                            new Date(calendar.getTimeInMillis())
-                    );
+
+                    String tipo = F.getTipo();
+
+
+                    if ( tipo.equals("innamovible") || tipo.equals("nolaborable"))
+                    {
+                       if ( F.hasOpcional())
+                       {
+                           calendario.setBackgroundResourceForDate(
+                                   R.color.silver,
+                                   new Date(calendar.getTimeInMillis())
+                           );
+                       } else {
+                            calendario.setBackgroundResourceForDate(
+                                    R.color.green,
+                                    new Date(calendar.getTimeInMillis())
+                            );
+                       }
+
+                    } else if (tipo.equals("trasladable" ))
+                    {
+                        calendario.setBackgroundResourceForDate(
+                                R.color.yellow,
+                                new Date(calendar.getTimeInMillis())
+                        );
+
+                        calendar.set(calendar.get(Calendar.YEAR), F.getMes() - 1, F.getTraslado());
+
+                        calendario.setBackgroundResourceForDate(
+                                R.color.green,
+                                new Date(calendar.getTimeInMillis())
+                        );
+                    }
                 }
+
+                // hago repaint del calendario
                 calendario.refreshView();
             }
         }
