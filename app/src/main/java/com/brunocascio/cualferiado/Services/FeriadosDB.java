@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.brunocascio.cualferiado.Entities.Feriado;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -15,6 +16,8 @@ import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+import com.brunocascio.cualferiado.Entities.Opcional;
 import com.brunocascio.cualferiado.Services.FeriadosREST.Status;
 
 /**
@@ -56,6 +59,7 @@ public class FeriadosDB extends Application {
 
             @Override
             public void failure(RetrofitError error) {
+                EventBus.getDefault().postSticky(new SyncEvent("Falló al conectar con servidor", "error"));
                 Log.e("Error al chequear", error.getMessage());
             }
         });
@@ -81,27 +85,44 @@ public class FeriadosDB extends Application {
 
                     // Elimino todos los feriados para actualizarlos
                     Feriado.deleteAll(Feriado.class);
+                    Opcional.deleteAll(Opcional.class);
 
                     // Guarda la colección de feriados
                     Feriado.saveInTx(L);
 
+                    // Guardo los opcionales y actualizo las FK
+                    for (Feriado F: L){
+                        if ( F.opcional != null){
+                            Opcional o = new Opcional();
+                            o.origen   = F.opcional.origen;
+                            o.tipo     = F.opcional.tipo;
+                            o.religion = F.opcional.religion;
+                            o.save();
+
+                            F.opcional = o;
+                            F.save();
+                        }
+                    }
+
                     // Guardo esta última actualización
                     Editor edit = preferences.edit();
                     edit.clear();
-                    edit.commit();
                     edit.putLong("lastUpdate", lastCheck);
+                    edit.commit();
 
                     // Notifico que se actualizaron los feriados
-                    EventBus.getDefault().postSticky(new SyncEvent());
+                    EventBus.getDefault().postSticky(new SyncEvent("Actualizando...", "update"));
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
+                    EventBus.getDefault().postSticky(new SyncEvent("Falló al conectar con servidor", "error"));
                     Log.e("Error en la petición!", "Error al peticionar al servidor");
                 }
             });
 
         } else {
+            EventBus.getDefault().postSticky(new SyncEvent("Actualizado"));
             Log.i("Requiere sincronización?", "NO");
         }
 

@@ -8,6 +8,7 @@ import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,6 +24,7 @@ import com.brunocascio.cualferiado.Services.SyncEvent;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 
+import java.lang.reflect.Array;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -200,14 +202,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         }
 
         public FeriadoActualFragment() {
-
             setRetainInstance(true);
         }
 
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            // Registro como sucriptor
-            EventBus.getDefault().registerSticky(this);
         }
 
         @Override
@@ -219,6 +218,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             dFeriadoLabel = (TextView) rootView.findViewById(R.id.dFeriado_label);
             mFeriadoLabel = (TextView) rootView.findViewById(R.id.mFeriado_label);
 
+            // Registro como sucriptor
+            if(!EventBus.getDefault().isRegistered(this))
+                EventBus.getDefault().registerSticky(this);
+
             // Inicializo el label "nFeriadoLabel" con el feriado actual
             setFeriadoActual();
 
@@ -228,9 +231,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         public void onEvent(SyncEvent event){
             Log.i("Debugeando", "Evento recibido en el fragmento feriado actual :)");
 
-            setFeriadoActual();
+            this.setFeriadoActual();
 
-            Toast.makeText(this.getActivity(), "Actualizado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getActivity(), event.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
         public void onDestroy() {
@@ -243,14 +246,16 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         //      Helpers
         // --------------------------------------
 
-        private static void setFeriadoActual(){
+        private void setFeriadoActual(){
 
             // Traigo el próximo feriado de la DB
             Feriado lastFeriado = Feriado.getProximoFeriado();
 
-            // Seteo feriado al label
-            dFeriadoLabel.setText(lastFeriado.getDia()+"");
-            mFeriadoLabel.setText(lastFeriado.getMesString());
+            if ( lastFeriado != null) {
+                // Seteo feriado al label
+                dFeriadoLabel.setText(String.valueOf(lastFeriado.dia));
+                mFeriadoLabel.setText(lastFeriado.getMesString());
+            }
         }
     }
 
@@ -265,16 +270,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         private View rootView;
         private CaldroidFragment calendario;
         private Iterator<Feriado> feriados;
+        private CalendarioFragment instance;
         private long total;
 
         public CalendarioFragment()
         {
             Log.i("instancia","instancia nueva");
-
             this.total = 0;
-
-            // Registro como sucriptor
-            EventBus.getDefault().registerSticky(this);
 
             setRetainInstance(true);
         }
@@ -297,27 +299,48 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 // Set color to actual date
                 calendario.setBackgroundResourceForDate(R.color.blue, new Date());
 
-                if ( total == 0)
-                    this.setColorsDates();
+                this.setColorsDates();
 
                 calendario.setCaldroidListener(new CaldroidListener() {
 
                     @Override
                     public void onSelectDate(Date date, View view) {
-                        Toast.makeText(getApplicationContext(), date.toString(), Toast.LENGTH_LONG).show();
+
+                        String day = (String) DateFormat.format("dd", date);
+                        Feriado F = Feriado.getFeriado(Integer.parseInt(day), date.getMonth());
+
+                        if ( F != null)
+                        {
+                            String msg = F.motivo;
+
+                            if ( F.opcional != null){
+
+                                msg += " - "+F.opcional.tipo+" (";
+
+                                if (F.opcional.religion != null && F.opcional.religion != "")
+                                    msg += F.opcional.religion;
+                                else if (F.opcional.origen != null && F.opcional.origen != "")
+                                    msg += F.opcional.origen;
+
+                                msg += ")";
+
+                            }
+
+                            if (F.traslado != 0)
+                                msg += " - Traslado al "+F.traslado;
+
+                            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                        }
                     }
 
                     @Override
-                    public void onChangeMonth(int month, int year) {
-                    }
+                    public void onChangeMonth(int month, int year) {}
 
                     @Override
-                    public void onLongClickDate(Date date, View view) {
-                    }
+                    public void onLongClickDate(Date date, View view) {}
 
                     @Override
-                    public void onCaldroidViewCreated() {
-                    }
+                    public void onCaldroidViewCreated() {}
 
                 });
             }
@@ -340,19 +363,19 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 while (feriados.hasNext())
                 {
                     Feriado F = feriados.next();
-                    calendar.set(calendar.get(Calendar.YEAR), F.getMes() - 1, F.getDia());
+                    calendar.set(calendar.get(Calendar.YEAR), F.mes - 1, F.dia);
 
-                    String tipo = F.getTipo();
-
+                    String tipo = F.tipo;
 
                     if ( tipo.equals("innamovible") || tipo.equals("nolaborable"))
                     {
-                       if ( F.hasOpcional())
+                        if ( F.opcional != null && !"cristianismo".equals(F.opcional.religion))
                        {
                            calendario.setBackgroundResourceForDate(
                                    R.color.silver,
                                    new Date(calendar.getTimeInMillis())
                            );
+
                        } else {
                             calendario.setBackgroundResourceForDate(
                                     R.color.green,
@@ -367,7 +390,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                                 new Date(calendar.getTimeInMillis())
                         );
 
-                        calendar.set(calendar.get(Calendar.YEAR), F.getMes() - 1, F.getTraslado());
+                        calendar.set(calendar.get(Calendar.YEAR), F.mes - 1, F.traslado);
 
                         calendario.setBackgroundResourceForDate(
                                 R.color.green,
@@ -386,12 +409,18 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
             rootView = inflater.inflate(R.layout.fragment_calendario, container, false);
 
+            // Registro como sucriptor
+            if(!EventBus.getDefault().isRegistered(this))
+                EventBus.getDefault().registerSticky(this);
+
             return rootView;
         }
 
         public void onEvent(SyncEvent event){
             Log.i("Debugeando", "Evento recibido en el fragmento de calendario :)");
-            this.setColorsDates();
+
+            if ( event.getType() == "update")
+                this.setColorsDates();
         }
 
         public void onSaveInstanceState(Bundle outState) {

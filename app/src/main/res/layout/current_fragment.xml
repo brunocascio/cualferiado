@@ -15,7 +15,7 @@
         android:gravity="center_vertical|center_horizontal">
 
         <TextView
-            android:hint="1"
+            android:hint="-"
             android:id="@+id/dFeriado_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
             android:textSize="200sp" />
 
         <TextView
-            android:hint="ENERO"
+            android:hint="-"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/mFeriado_label"
