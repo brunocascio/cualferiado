@@ -49,7 +49,7 @@ public class Feriado extends SugarRecord<Feriado> {
         String currentDay   = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
 
         List<Feriado> L = Feriado.find(Feriado.class,
-                "(mes = ?) AND (dia > ? OR mes > ?)",                 // query
+                "(mes = ? AND dia > ?) OR mes > ?",                 // query
                 new String[]{currentMonth, currentDay, currentMonth}, // parameters
                 null,                                                 // groupby
                 "mes ASC, dia ASC",                                   // order
