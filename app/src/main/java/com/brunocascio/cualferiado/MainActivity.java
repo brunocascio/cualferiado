@@ -164,7 +164,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         @Override
         public int getCount() {
-            // Show 1 total pages.
+            // Show 2 total pages.
             return 2;
         }
 
@@ -226,7 +226,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 EventBus.getDefault().registerSticky(this);
 
             // Inicializo el label "nFeriadoLabel" con el feriado actual
-            setFeriadoActual();
+            this.setFeriadoActual();
 
             return rootView;
         }
@@ -272,7 +272,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                         TableRow.LayoutParams.WRAP_CONTENT,
                         TableRow.LayoutParams.WRAP_CONTENT));
 
-                String msg = "Motivo: ".toUpperCase();
+                String msg = "MOTIVO: ";
                 TextView lbl_motivo = new TextView(tableData.getContext());
                 lbl_motivo.setTextSize((float) 20.0);
                 lbl_motivo.setTextColor(Color.GRAY); // set the color
@@ -285,7 +285,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 lbl_motivo.setText(msg); // set the text for the header
                 trMotivo.addView(lbl_motivo); // add the column to the table row here
 
-                // Agrego filas a la tabla
+                // Agrego fila a la tabla
                 tableData.addView(trMotivo, new TableLayout.LayoutParams(
                         TableLayout.LayoutParams.MATCH_PARENT,
                         TableLayout.LayoutParams.WRAP_CONTENT));
@@ -301,7 +301,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 lbl_laborable.setTextSize((float) 20.0);
                 lbl_laborable.setTextColor(Color.GRAY); // set the color
 
-                msg = "Laborable: ".toUpperCase();
+                msg = "LABORABLE: ";
                 if (lastFeriado.tipo.equals("nolaborable")) {
                     msg += "No";
                 } else {
@@ -349,7 +349,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                     lbl_traslado.setTextSize((float) 20.0);
                     lbl_traslado.setTextColor(Color.GRAY); // set the color
 
-                    msg = "Traslado al: "+ lastFeriado.traslado;
+                    msg = "TRASLADO AL: "+ lastFeriado.traslado;
 
                     lbl_traslado.setText(msg);
                     trTraslado.addView(lbl_traslado); // add the column to the table row here
@@ -372,9 +372,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                     lbl_opcional.setTextColor(Color.GRAY); // set the color
 
                     if (lastFeriado.opcional.tipo.equals("religion"))
-                        msg = "Religión: "+ lastFeriado.opcional.religion;
+                        msg = "RELIGIÓN: "+ lastFeriado.opcional.religion;
                     else
-                        msg = "Origen: "+ lastFeriado.opcional.origen;
+                        msg = "ORIGEN: "+ lastFeriado.opcional.origen;
 
                     lbl_opcional.setText(msg);
                     trOpcional.addView(lbl_opcional); // add the column to the table row here
@@ -384,6 +384,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                             TableLayout.LayoutParams.WRAP_CONTENT));
                 }
 
+                // Quito borde de la última fila y seteo el padding
                 int totalRows = tableData.getChildCount();
                 int i;
                 for (i = 0; i < totalRows -1; i++){
@@ -391,7 +392,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                     child.setBackgroundResource(R.drawable.row_border);
                     child.setPadding(5,10,5,10);
                 }
-
                 View child = tableData.getChildAt(i);
                 child.setPadding(5,10,5,10);
 
