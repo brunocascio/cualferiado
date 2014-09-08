@@ -3,6 +3,7 @@ package com.brunocascio.cualferiado;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentActivity;
@@ -15,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,11 +27,9 @@ import com.brunocascio.cualferiado.Services.SyncEvent;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 
-import java.lang.reflect.Array;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 
 import de.greenrobot.event.EventBus;
@@ -191,6 +192,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         private static TextView dFeriadoLabel;
         private static TextView mFeriadoLabel;
+        private static TableLayout tableData;
 
         private static View rootView;
 
@@ -217,6 +219,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             // UI Components
             dFeriadoLabel = (TextView) rootView.findViewById(R.id.dFeriado_label);
             mFeriadoLabel = (TextView) rootView.findViewById(R.id.mFeriado_label);
+            tableData     = (TableLayout) rootView.findViewById(R.id.tableData);
 
             // Registro como sucriptor
             if(!EventBus.getDefault().isRegistered(this))
@@ -231,7 +234,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         public void onEvent(SyncEvent event){
             Log.i("Debugeando", "Evento recibido en el fragmento feriado actual :)");
 
-            this.setFeriadoActual();
+            if (event.getType() == "update")
+                this.setFeriadoActual();
 
             Toast.makeText(this.getActivity(), event.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -248,6 +252,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         private void setFeriadoActual(){
 
+            Log.i("Actual","Setea feriado");
+
             // Traigo el próximo feriado de la DB
             Feriado lastFeriado = Feriado.getProximoFeriado();
 
@@ -255,6 +261,105 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 // Seteo feriado al label
                 dFeriadoLabel.setText(String.valueOf(lastFeriado.dia));
                 mFeriadoLabel.setText(lastFeriado.getMesString());
+
+                tableData.removeAllViews();
+                //tableData.setBackgroundResource(R.drawable.container_dropshadow);
+
+
+                // Fila motivo
+                TableRow trMotivo = new TableRow(tableData.getContext());
+                trMotivo.setLayoutParams(new TableRow.LayoutParams(
+                        TableRow.LayoutParams.MATCH_PARENT,
+                        TableRow.LayoutParams.WRAP_CONTENT));
+                trMotivo.setBackgroundResource(R.drawable.row_border);
+
+                String msg = "Motivo: ".toUpperCase();
+                TextView lbl_motivo = new TextView(tableData.getContext());
+                lbl_motivo.setText(msg+lastFeriado.motivo); // set the text for the header
+                lbl_motivo.setTextSize((float) 20.0);
+                lbl_motivo.setTextColor(Color.GRAY); // set the color
+                lbl_motivo.setPadding(5, 5, 5, 5); // set the padding (if required)
+                trMotivo.addView(lbl_motivo); // add the column to the table row here
+
+                // Agrego filas a la tabla
+                tableData.addView(trMotivo, new TableLayout.LayoutParams(
+                        TableLayout.LayoutParams.MATCH_PARENT,
+                        TableLayout.LayoutParams.WRAP_CONTENT));
+
+
+                // Fila laborable
+                TableRow trLaborable = new TableRow(tableData.getContext());
+                trLaborable.setLayoutParams(new TableRow.LayoutParams(
+                        TableRow.LayoutParams.MATCH_PARENT,
+                        TableRow.LayoutParams.WRAP_CONTENT));
+                trLaborable.setBackgroundResource(R.drawable.row_border); // ULTIMO NO LLEVA BORDE
+
+                TextView lbl_laborable = new TextView(tableData.getContext());
+                lbl_laborable.setTextSize((float) 20.0);
+                lbl_laborable.setTextColor(Color.GRAY); // set the color
+                lbl_laborable.setPadding(5, 5, 5, 5); // set the padding (if required)
+
+                msg = "Laborable: ".toUpperCase();
+                if (lastFeriado.tipo.equals("nolaborable")) {
+                    msg += "No";
+                } else {
+                    msg += "Si";
+                }
+                lbl_laborable.setText(msg);
+                trLaborable.addView(lbl_laborable); // add the column to the table row here
+
+                tableData.addView(trLaborable, new TableLayout.LayoutParams(
+                        TableLayout.LayoutParams.MATCH_PARENT,
+                        TableLayout.LayoutParams.WRAP_CONTENT));
+
+
+                // Fila laborable
+                if (!lastFeriado.tipo.equals("nolaborable")) {
+                    // Fila tipo
+                    TableRow trTipo = new TableRow(tableData.getContext());
+                    trLaborable.setLayoutParams(new TableRow.LayoutParams(
+                            TableRow.LayoutParams.MATCH_PARENT,
+                            TableRow.LayoutParams.WRAP_CONTENT));
+                    //trTipo.setBackgroundResource(R.drawable.row_border); // ULTIMO NO LLEVA BORDE
+
+                    TextView lbl_tipo = new TextView(tableData.getContext());
+                    lbl_tipo.setTextSize((float) 20.0);
+                    lbl_tipo.setTextColor(Color.GRAY); // set the color
+                    lbl_tipo.setPadding(5, 5, 5, 5); // set the padding (if required)
+
+                    msg = "TIPO: "+lastFeriado.tipo;
+
+                    lbl_tipo.setText(msg);
+                    trTipo.addView(lbl_tipo); // add the column to the table row here
+
+                    tableData.addView(trTipo, new TableLayout.LayoutParams(
+                            TableLayout.LayoutParams.MATCH_PARENT,
+                            TableLayout.LayoutParams.WRAP_CONTENT));
+                }
+
+                // Fila Trasladable
+                if (lastFeriado.tipo.equals("trasladable")) {
+                    // Fila tipo
+                    TableRow trTraslado = new TableRow(tableData.getContext());
+                    trTraslado.setLayoutParams(new TableRow.LayoutParams(
+                            TableRow.LayoutParams.MATCH_PARENT,
+                            TableRow.LayoutParams.WRAP_CONTENT));
+                    //trTraslado.setBackgroundResource(R.drawable.row_border);
+
+                    TextView lbl_traslado = new TextView(tableData.getContext());
+                    lbl_traslado.setTextSize((float) 20.0);
+                    lbl_traslado.setTextColor(Color.GRAY); // set the color
+                    lbl_traslado.setPadding(5, 5, 5, 5); // set the padding (if required)
+
+                    msg = "Traslado al: "+ lastFeriado.traslado;
+
+                    lbl_traslado.setText(msg);
+                    trTraslado.addView(lbl_traslado); // add the column to the table row here
+
+                    tableData.addView(trTraslado, new TableLayout.LayoutParams(
+                            TableLayout.LayoutParams.MATCH_PARENT,
+                            TableLayout.LayoutParams.WRAP_CONTENT));
+                }
             }
         }
     }

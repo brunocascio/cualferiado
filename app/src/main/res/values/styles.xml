@@ -1,8 +1,35 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="AppTheme" parent="@android:style/Theme.Holo.Light">
+
         <!-- Customize your theme here. -->
+        <item name="android:actionBarStyle">@style/ActionBarStyleCustom</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabStyleCustom</item>
+        <item name="android:actionBarTabTextStyle">@style/ActionBarTabStyleTextCustom</item>
+    </style>
+
+
+    <style name="ActionBarStyleCustom" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">@color/red</item>
+        <item name="android:titleTextStyle">@style/titleTextStyleCustom</item>
+    </style>
+    <style name="titleTextStyleCustom" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
+    <style name="ActionBarTabStyleCustom" parent="@android:style/Widget.Holo.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_bar_background</item>
+    </style>
+    <style name="ActionBarTabStyleTextCustom" parent="@android:style/Widget.Holo.ActionBar.TabText">
+        <item name="android:textColor">@color/red</item>
+    </style>
+
+    <style name="Divider">
+        <item name="android:layout_width">1dip</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/grey</item>
     </style>
 
 </resources>

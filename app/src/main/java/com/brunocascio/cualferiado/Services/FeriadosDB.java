@@ -2,13 +2,14 @@ package com.brunocascio.cualferiado.Services;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.util.Log;
 
 import com.brunocascio.cualferiado.Entities.Feriado;
+import com.brunocascio.cualferiado.Entities.Opcional;
+import com.brunocascio.cualferiado.Services.FeriadosREST.Status;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -16,9 +17,6 @@ import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-
-import com.brunocascio.cualferiado.Entities.Opcional;
-import com.brunocascio.cualferiado.Services.FeriadosREST.Status;
 
 /**
  * Created by d3m0n on 22/08/14.
