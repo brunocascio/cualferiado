@@ -58,7 +58,6 @@ public class FeriadosDB extends Application {
             @Override
             public void failure(RetrofitError error) {
                 EventBus.getDefault().postSticky(new SyncEvent("Falló al conectar con servidor", "error"));
-                Log.e("Error al chequear", error.getMessage());
             }
         });
 
@@ -115,7 +114,6 @@ public class FeriadosDB extends Application {
                 @Override
                 public void failure(RetrofitError error) {
                     EventBus.getDefault().postSticky(new SyncEvent("Falló al conectar con servidor", "error"));
-                    Log.e("Error en la petición!", "Error al peticionar al servidor");
                 }
             });
 

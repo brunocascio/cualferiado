@@ -1,8 +1,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.brunocascio.cualferiado.MainActivity" >
-    <item android:id="@+id/action_settings"
+
+    <!--<item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"
+        android:showAsAction="never" />-->
+
+    <item android:id="@+id/action_actualizar"
+        android:title="@string/action_actualizar"
+        android:orderInCategory="101"
+        android:showAsAction="never" />
+
+    <item android:id="@+id/action_exit"
+        android:title="@string/action_exit"
+        android:orderInCategory="102"
         android:showAsAction="never" />
 </menu>

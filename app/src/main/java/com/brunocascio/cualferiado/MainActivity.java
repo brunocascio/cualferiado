@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.brunocascio.cualferiado.Entities.Feriado;
 import com.brunocascio.cualferiado.Services.FeriadosDB;
+import com.brunocascio.cualferiado.Services.FeriadosREST;
 import com.brunocascio.cualferiado.Services.SyncEvent;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
@@ -115,9 +116,15 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_exit:
+                System.exit(0);
+                break;
+            case R.id.action_actualizar:
+                FeriadosDB.syncData(getApplicationContext());
+                break;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -278,7 +285,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 lbl_motivo.setTextColor(Color.GRAY); // set the color
 
                 if ( lastFeriado.motivo.length() > 20 )
-                    msg += lastFeriado.motivo.substring(0,20)+"...";
+                    msg += lastFeriado.motivo.substring(0, 20)+"...";
                 else
                     msg += lastFeriado.motivo;
 
