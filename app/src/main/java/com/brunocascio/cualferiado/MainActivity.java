@@ -269,16 +269,20 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 // Fila motivo
                 TableRow trMotivo = new TableRow(tableData.getContext());
                 trMotivo.setLayoutParams(new TableRow.LayoutParams(
-                        TableRow.LayoutParams.MATCH_PARENT,
+                        TableRow.LayoutParams.WRAP_CONTENT,
                         TableRow.LayoutParams.WRAP_CONTENT));
-                trMotivo.setBackgroundResource(R.drawable.row_border);
 
                 String msg = "Motivo: ".toUpperCase();
                 TextView lbl_motivo = new TextView(tableData.getContext());
-                lbl_motivo.setText(msg+lastFeriado.motivo); // set the text for the header
                 lbl_motivo.setTextSize((float) 20.0);
                 lbl_motivo.setTextColor(Color.GRAY); // set the color
-                lbl_motivo.setPadding(5, 5, 5, 5); // set the padding (if required)
+
+                if ( lastFeriado.motivo.length() > 20 )
+                    msg += lastFeriado.motivo.substring(0,20)+"...";
+                else
+                    msg += lastFeriado.motivo;
+
+                lbl_motivo.setText(msg); // set the text for the header
                 trMotivo.addView(lbl_motivo); // add the column to the table row here
 
                 // Agrego filas a la tabla
@@ -292,12 +296,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 trLaborable.setLayoutParams(new TableRow.LayoutParams(
                         TableRow.LayoutParams.MATCH_PARENT,
                         TableRow.LayoutParams.WRAP_CONTENT));
-                trLaborable.setBackgroundResource(R.drawable.row_border); // ULTIMO NO LLEVA BORDE
 
                 TextView lbl_laborable = new TextView(tableData.getContext());
                 lbl_laborable.setTextSize((float) 20.0);
                 lbl_laborable.setTextColor(Color.GRAY); // set the color
-                lbl_laborable.setPadding(5, 5, 5, 5); // set the padding (if required)
 
                 msg = "Laborable: ".toUpperCase();
                 if (lastFeriado.tipo.equals("nolaborable")) {
@@ -320,12 +322,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                     trLaborable.setLayoutParams(new TableRow.LayoutParams(
                             TableRow.LayoutParams.MATCH_PARENT,
                             TableRow.LayoutParams.WRAP_CONTENT));
-                    //trTipo.setBackgroundResource(R.drawable.row_border); // ULTIMO NO LLEVA BORDE
 
                     TextView lbl_tipo = new TextView(tableData.getContext());
                     lbl_tipo.setTextSize((float) 20.0);
                     lbl_tipo.setTextColor(Color.GRAY); // set the color
-                    lbl_tipo.setPadding(5, 5, 5, 5); // set the padding (if required)
 
                     msg = "TIPO: "+lastFeriado.tipo;
 
@@ -344,12 +344,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                     trTraslado.setLayoutParams(new TableRow.LayoutParams(
                             TableRow.LayoutParams.MATCH_PARENT,
                             TableRow.LayoutParams.WRAP_CONTENT));
-                    //trTraslado.setBackgroundResource(R.drawable.row_border);
 
                     TextView lbl_traslado = new TextView(tableData.getContext());
                     lbl_traslado.setTextSize((float) 20.0);
                     lbl_traslado.setTextColor(Color.GRAY); // set the color
-                    lbl_traslado.setPadding(5, 5, 5, 5); // set the padding (if required)
 
                     msg = "Traslado al: "+ lastFeriado.traslado;
 
@@ -360,6 +358,43 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                             TableLayout.LayoutParams.MATCH_PARENT,
                             TableLayout.LayoutParams.WRAP_CONTENT));
                 }
+
+                // Fila Opcional
+                if (lastFeriado.opcional != null) {
+                    // Fila tipo
+                    TableRow trOpcional = new TableRow(tableData.getContext());
+                    trOpcional.setLayoutParams(new TableRow.LayoutParams(
+                            TableRow.LayoutParams.MATCH_PARENT,
+                            TableRow.LayoutParams.WRAP_CONTENT));
+
+                    TextView lbl_opcional = new TextView(tableData.getContext());
+                    lbl_opcional.setTextSize((float) 20.0);
+                    lbl_opcional.setTextColor(Color.GRAY); // set the color
+
+                    if (lastFeriado.opcional.tipo.equals("religion"))
+                        msg = "Religión: "+ lastFeriado.opcional.religion;
+                    else
+                        msg = "Origen: "+ lastFeriado.opcional.origen;
+
+                    lbl_opcional.setText(msg);
+                    trOpcional.addView(lbl_opcional); // add the column to the table row here
+
+                    tableData.addView(trOpcional, new TableLayout.LayoutParams(
+                            TableLayout.LayoutParams.MATCH_PARENT,
+                            TableLayout.LayoutParams.WRAP_CONTENT));
+                }
+
+                int totalRows = tableData.getChildCount();
+                int i;
+                for (i = 0; i < totalRows -1; i++){
+                    View child = tableData.getChildAt(i);
+                    child.setBackgroundResource(R.drawable.row_border);
+                    child.setPadding(5,10,5,10);
+                }
+
+                View child = tableData.getChildAt(i);
+                child.setPadding(5,10,5,10);
+
             }
         }
     }

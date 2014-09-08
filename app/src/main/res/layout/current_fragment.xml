@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textStyle="bold"
-            android:textSize="100sp"
+            android:textSize="90sp"
             android:textColor="@color/grey" />
 
         <TextView
@@ -36,18 +36,25 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/mFeriado_label"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:gravity="center_vertical|center_horizontal"
             android:layout_marginLeft="10dp"
             android:textColor="@color/grey" />
     </LinearLayout>
 
-    <TableLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:id="@+id/tableData"
-        android:background="@drawable/container_dropshadow">
-    </TableLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView" >
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:id="@+id/tableData"
+            android:background="@drawable/container_dropshadow">
+
+        </TableLayout>
+    </ScrollView>
 
 </LinearLayout>
