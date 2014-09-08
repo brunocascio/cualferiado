@@ -7,6 +7,7 @@
         <item name="android:actionBarStyle">@style/ActionBarStyleCustom</item>
         <item name="android:actionBarTabStyle">@style/ActionBarTabStyleCustom</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabStyleTextCustom</item>
+        <item name="android:actionOverflowButtonStyle">@style/ActionBarTabStyleButtonCustom</item>
     </style>
 
 
@@ -26,10 +27,8 @@
         <item name="android:textColor">@color/red</item>
     </style>
 
-    <style name="Divider">
-        <item name="android:layout_width">1dip</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@color/grey</item>
+    <style name="ActionBarTabStyleButtonCustom" parent="@android:style/Widget.Holo.ActionButton.Overflow">
+
     </style>
 
 </resources>
