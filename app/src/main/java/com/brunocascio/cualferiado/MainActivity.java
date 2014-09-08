@@ -481,7 +481,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                     }
 
                     @Override
-                    public void onChangeMonth(int month, int year) {}
+                    public void onChangeMonth(int month, int year) {
+                        getActionBar()
+                            .getTabAt(getActionBar().getTabCount()-1)
+                            .setText(Feriado.getMesString(month));
+                    }
 
                     @Override
                     public void onLongClickDate(Date date, View view) {}
