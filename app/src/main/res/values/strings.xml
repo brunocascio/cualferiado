@@ -13,5 +13,7 @@
     <string name="nolaborable">No Laborable</string>
     <string name="other">Otro</string>
     <string name="ok">OK</string>
+    <string name="add_widget">Agregar Widget</string>
+    <string name="next">Próximo</string>
 
 </resources>

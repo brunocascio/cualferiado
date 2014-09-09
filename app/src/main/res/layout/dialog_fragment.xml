@@ -39,8 +39,8 @@
                 android:id="@+id/text_trasladable"
                 android:textColor="@color/grey"
                 android:textStyle="bold"
-                android:layout_gravity="center_vertical"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:layout_gravity="center" />
 
         </TableRow>
 
