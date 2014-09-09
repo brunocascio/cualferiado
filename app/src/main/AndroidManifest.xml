@@ -40,7 +40,7 @@
         <receiver android:name=".CurrentWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="com.brunocascio.cualferiado.SETTING_UPDATE" />
+                <action android:name="com.brunocascio.cualferiado.DB_UPDATE" />
             </intent-filter>
 
             <meta-data

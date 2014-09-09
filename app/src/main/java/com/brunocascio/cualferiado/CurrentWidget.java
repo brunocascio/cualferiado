@@ -22,14 +22,14 @@ import de.greenrobot.event.EventBus;
  */
 public class CurrentWidget extends AppWidgetProvider {
 
-    public static final String SETTING_UPDATE = "com.brunocascio.cualferiado.SETTING_UPDATE";
+    public static final String DB_UPDATE = "com.brunocascio.cualferiado.SETTING_UPDATE";
 
     @Override
     public void onReceive(Context context, Intent intent)
     {
         super.onReceive(context, intent);
         String action = intent.getAction();
-        if (action.equals(SETTING_UPDATE))
+        if (action.equals(DB_UPDATE))
         {
             if (intent.hasExtra("check")){
                 Log.i("widget","verifica en el server");
@@ -56,7 +56,7 @@ public class CurrentWidget extends AppWidgetProvider {
         views.setTextViewText(R.id.mFeriadoText, String.valueOf(lastFeriado.getMesString()));
 
         Intent updateIntent = new Intent();
-        updateIntent.setAction(SETTING_UPDATE);
+        updateIntent.setAction(DB_UPDATE);
         updateIntent.putExtra("check",true);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context, 0, updateIntent, PendingIntent.FLAG_UPDATE_CURRENT);

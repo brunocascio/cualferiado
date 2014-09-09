@@ -214,7 +214,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 // Send data to widget
                 Context context = getActivity().getApplicationContext();
                 Intent i = new Intent(context, CurrentWidget.class);
-                i.setAction("com.brunocascio.cualferiado.SETTING_UPDATE");
+                i.setAction("com.brunocascio.cualferiado.DB_UPDATE");
                 context.sendBroadcast(i);
             }
 
