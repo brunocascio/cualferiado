@@ -12,7 +12,7 @@ import retrofit.http.GET;
  */
 public interface FeriadosREST {
 
-    String SERVICE_ENDPOINT  = "http://public.cualferiado.com/";
+    String SERVICE_ENDPOINT = "http://public.cualferiado.com/";
 
     // asynchronously with a callback
     @GET("/feriados")

@@ -18,25 +18,21 @@ public class Feriado extends SugarRecord<Feriado> {
     // Relationship one-to-one
     public Opcional opcional;
 
-    public Feriado() {}
+    public Feriado() {
+    }
 
     public Feriado(int dia, int mes, int traslado, String motivo, String tipo, Opcional opcional) {
-        this.dia      = dia;
-        this.mes      = mes;
+        this.dia = dia;
+        this.mes = mes;
         this.traslado = traslado;
-        this.motivo   = motivo;
-        this.tipo     = tipo;
+        this.motivo = motivo;
+        this.tipo = tipo;
         this.opcional = opcional;
     }
 
     // Helpers
 
-    public String getMesString(){
-        String[] monthNames = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
-        return monthNames[this.mes - 1];
-    }
-
-    public static String getMesString(int mes){
+    public static String getMesString(int mes) {
         String[] monthNames = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
         return monthNames[mes - 1];
     }
@@ -46,7 +42,7 @@ public class Feriado extends SugarRecord<Feriado> {
         Calendar calendar = Calendar.getInstance();
 
         String currentMonth = Integer.toString(calendar.get(Calendar.MONTH) + 1); // Arranca en 0
-        String currentDay   = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
+        String currentDay = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
 
         List<Feriado> L = Feriado.find(Feriado.class,
                 "(mes = ? AND dia > ?) OR mes > ?",                 // query
@@ -56,12 +52,12 @@ public class Feriado extends SugarRecord<Feriado> {
                 "1"                                                   // limit
         );
 
-        if ( !L.isEmpty() ) {
+        if (!L.isEmpty()) {
             return L.get(0);
         }
 
         // Si no existe próximo feriado, retorno el primero del año
-        return new Feriado(1,1,0,"Año Nuevo","innamovible", null);
+        return new Feriado(1, 1, 0, "Año Nuevo", "innamovible", null);
     }
 
     public static Feriado getFeriado(int day, int month) {
@@ -70,7 +66,7 @@ public class Feriado extends SugarRecord<Feriado> {
 
         // convierto a string
         String monthString = String.valueOf(month + 1); // Arranca en 0
-        String dayString   = String.valueOf(day);
+        String dayString = String.valueOf(day);
 
         List<Feriado> L = Feriado.find(
                 Feriado.class,                          // Class Object
@@ -81,11 +77,16 @@ public class Feriado extends SugarRecord<Feriado> {
                 "1"                                     // limit
         );
 
-        if ( !L.isEmpty() ) {
+        if (!L.isEmpty()) {
             return L.get(0);
         }
 
         return null;
+    }
+
+    public String getMesString() {
+        String[] monthNames = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+        return monthNames[this.mes - 1];
     }
 
 

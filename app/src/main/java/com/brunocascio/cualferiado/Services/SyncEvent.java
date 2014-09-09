@@ -8,7 +8,7 @@ public class SyncEvent {
     private String message;
     private String type;
 
-    public SyncEvent(){
+    public SyncEvent() {
         this.message = "";
         this.type = "";
     }
@@ -23,11 +23,11 @@ public class SyncEvent {
         this.type = "success";
     }
 
-    public String getMessage(){
+    public String getMessage() {
         return this.message;
     }
 
-    public String getType(){
+    public String getType() {
         return this.type;
     }
 }

@@ -95,7 +95,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                             .setTabListener(this));
         }
 
-        if( savedInstanceState == null ) {
+        if (savedInstanceState == null) {
             FeriadosDB.syncData(getApplicationContext());
         }
 
@@ -140,7 +140,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public void onTabSelected(ActionBar.Tab tab, android.app.FragmentTransaction fragmentTransaction) {
         // When the given tab is selected, switch to the corresponding page in
         // the ViewPager.
-        if ( (tab.getPosition() + 1) == getActionBar().getTabCount() ) {
+        if ((tab.getPosition() + 1) == getActionBar().getTabCount()) {
             getActionBar().setHomeButtonEnabled(true);
         }
         mViewPager.setCurrentItem(tab.getPosition());
@@ -154,57 +154,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public void onTabReselected(ActionBar.Tab tab, android.app.FragmentTransaction fragmentTransaction) {
     }
 
-    
-
     /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a FeriadoActualFragment (defined as a static inner class below).
-            switch (position) {
-                case 0:
-                    return FeriadoActualFragment.newInstance();
-                case 1:
-                    return new CalendarioFragment();
-                default:
-                    return FeriadoActualFragment.newInstance();
-            }
-        }
-
-        @Override
-        public int getCount() {
-            // Show 2 total pages.
-            return 2;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            Locale l = Locale.getDefault();
-            switch (position) {
-                case 0:
-                    return getString(R.string.title_next_section).toUpperCase(l);
-                case 1:
-                    return getString(R.string.title_calendar_section).toUpperCase(l);
-            }
-            return null;
-        }
-    }
-
-
-
-    /**
-     *
      * Fragmento que muestra el proximo feriado
-     *
      */
     public static class FeriadoActualFragment extends Fragment {
 
@@ -214,15 +165,15 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         private static View rootView;
 
+        public FeriadoActualFragment() {
+            setRetainInstance(true);
+        }
+
         public static FeriadoActualFragment newInstance() {
 
             FeriadoActualFragment fragment = new FeriadoActualFragment();
 
             return fragment;
-        }
-
-        public FeriadoActualFragment() {
-            setRetainInstance(true);
         }
 
         public void onCreate(Bundle savedInstanceState) {
@@ -237,10 +188,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             // UI Components
             dFeriadoLabel = (TextView) rootView.findViewById(R.id.dFeriado_label);
             mFeriadoLabel = (TextView) rootView.findViewById(R.id.mFeriado_label);
-            tableData     = (TableLayout) rootView.findViewById(R.id.tableData);
+            tableData = (TableLayout) rootView.findViewById(R.id.tableData);
 
             // Registro como sucriptor
-            if(!EventBus.getDefault().isRegistered(this))
+            if (!EventBus.getDefault().isRegistered(this))
                 EventBus.getDefault().registerSticky(this);
 
             // Inicializo el label "nFeriadoLabel" con el feriado actual
@@ -249,7 +200,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             return rootView;
         }
 
-        public void onEvent(SyncEvent event){
+        public void onEvent(SyncEvent event) {
             Log.i("Debugeando", "Evento recibido en el fragmento feriado actual :)");
 
             if (event.getType() == "update")
@@ -268,14 +219,14 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         //      Helpers
         // --------------------------------------
 
-        private void setFeriadoActual(){
+        private void setFeriadoActual() {
 
-            Log.i("Actual","Setea feriado");
+            Log.i("Actual", "Setea feriado");
 
             // Traigo el próximo feriado de la DB
             Feriado lastFeriado = Feriado.getProximoFeriado();
 
-            if ( lastFeriado != null) {
+            if (lastFeriado != null) {
                 // Seteo feriado al label
                 dFeriadoLabel.setText(String.valueOf(lastFeriado.dia));
                 mFeriadoLabel.setText(lastFeriado.getMesString());
@@ -295,8 +246,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 lbl_motivo.setTextSize((float) 20.0);
                 lbl_motivo.setTextColor(Color.GRAY); // set the color
 
-                if ( lastFeriado.motivo.length() > 20 )
-                    msg += lastFeriado.motivo.substring(0, 20)+"...";
+                if (lastFeriado.motivo.length() > 20)
+                    msg += lastFeriado.motivo.substring(0, 20) + "...";
                 else
                     msg += lastFeriado.motivo;
 
@@ -345,7 +296,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                     lbl_tipo.setTextSize((float) 20.0);
                     lbl_tipo.setTextColor(Color.GRAY); // set the color
 
-                    msg = "TIPO: "+lastFeriado.tipo;
+                    msg = "TIPO: " + lastFeriado.tipo;
 
                     lbl_tipo.setText(msg);
                     trTipo.addView(lbl_tipo); // add the column to the table row here
@@ -367,7 +318,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                     lbl_traslado.setTextSize((float) 20.0);
                     lbl_traslado.setTextColor(Color.GRAY); // set the color
 
-                    msg = "TRASLADO AL: "+ lastFeriado.traslado;
+                    msg = "TRASLADO AL: " + lastFeriado.traslado;
 
                     lbl_traslado.setText(msg);
                     trTraslado.addView(lbl_traslado); // add the column to the table row here
@@ -390,9 +341,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                     lbl_opcional.setTextColor(Color.GRAY); // set the color
 
                     if (lastFeriado.opcional.tipo.equals("religion"))
-                        msg = "RELIGIÓN: "+ lastFeriado.opcional.religion;
+                        msg = "RELIGIÓN: " + lastFeriado.opcional.religion;
                     else
-                        msg = "ORIGEN: "+ lastFeriado.opcional.origen;
+                        msg = "ORIGEN: " + lastFeriado.opcional.origen;
 
                     lbl_opcional.setText(msg);
                     trOpcional.addView(lbl_opcional); // add the column to the table row here
@@ -405,23 +356,63 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 // Quito borde de la última fila y seteo el padding
                 int totalRows = tableData.getChildCount();
                 int i;
-                for (i = 0; i < totalRows -1; i++){
+                for (i = 0; i < totalRows - 1; i++) {
                     View child = tableData.getChildAt(i);
                     child.setBackgroundResource(R.drawable.row_border);
-                    child.setPadding(5,10,5,10);
+                    child.setPadding(5, 10, 5, 10);
                 }
                 View child = tableData.getChildAt(i);
-                child.setPadding(5,10,5,10);
+                child.setPadding(5, 10, 5, 10);
 
             }
         }
     }
 
+    /**
+     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * one of the sections/tabs/pages.
+     */
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a FeriadoActualFragment (defined as a static inner class below).
+            switch (position) {
+                case 0:
+                    return FeriadoActualFragment.newInstance();
+                case 1:
+                    return new CalendarioFragment();
+                default:
+                    return FeriadoActualFragment.newInstance();
+            }
+        }
+
+        @Override
+        public int getCount() {
+            // Show 2 total pages.
+            return 2;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            Locale l = Locale.getDefault();
+            switch (position) {
+                case 0:
+                    return getString(R.string.title_next_section).toUpperCase(l);
+                case 1:
+                    return getString(R.string.title_calendar_section).toUpperCase(l);
+            }
+            return null;
+        }
+    }
 
     /**
-     *
      * Fragmento que muestra el calendario
-     *
      */
     public class CalendarioFragment extends Fragment {
 
@@ -431,9 +422,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         private CalendarioFragment instance;
         private long total;
 
-        public CalendarioFragment()
-        {
-            Log.i("instancia","instancia nueva");
+        public CalendarioFragment() {
+            Log.i("instancia", "instancia nueva");
             this.total = 0;
 
             setRetainInstance(true);
@@ -467,13 +457,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                         String day = (String) DateFormat.format("dd", date);
                         Feriado F = Feriado.getFeriado(Integer.parseInt(day), date.getMonth());
 
-                        if ( F != null)
-                        {
+                        if (F != null) {
                             String msg = F.motivo;
 
-                            if ( F.opcional != null){
+                            if (F.opcional != null) {
 
-                                msg += " - "+F.opcional.tipo+" (";
+                                msg += " - " + F.opcional.tipo + " (";
 
                                 if (F.opcional.religion != null && F.opcional.religion != "")
                                     msg += F.opcional.religion;
@@ -485,7 +474,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                             }
 
                             if (F.traslado != 0)
-                                msg += " - Traslado al "+F.traslado;
+                                msg += " - Traslado al " + F.traslado;
 
                             Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                         }
@@ -494,59 +483,58 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                     @Override
                     public void onChangeMonth(int month, int year) {
                         getActionBar()
-                            .getTabAt(getActionBar().getTabCount()-1)
-                            .setText(Feriado.getMesString(month));
+                                .getTabAt(getActionBar().getTabCount() - 1)
+                                .setText(Feriado.getMesString(month));
                     }
 
                     @Override
-                    public void onLongClickDate(Date date, View view) {}
+                    public void onLongClickDate(Date date, View view) {
+                    }
 
                     @Override
-                    public void onCaldroidViewCreated() {}
+                    public void onCaldroidViewCreated() {
+                    }
 
                 });
             }
         }
 
-        /*****************************
-        ** Set color for all holidays
-        ******************************
-        */
+        /**
+         * **************************
+         * * Set color for all holidays
+         * *****************************
+         */
         private void setColorsDates() {
 
-            total = Feriado.count(Feriado.class,null,null);
+            total = Feriado.count(Feriado.class, null, null);
 
-            if ( total > 0) {
+            if (total > 0) {
 
                 feriados = Feriado.findAll(Feriado.class);
 
                 Calendar calendar = Calendar.getInstance();
 
-                while (feriados.hasNext())
-                {
+                while (feriados.hasNext()) {
                     Feriado F = feriados.next();
                     calendar.set(calendar.get(Calendar.YEAR), F.mes - 1, F.dia);
 
                     String tipo = F.tipo;
 
-                    if ( tipo.equals("innamovible") || tipo.equals("nolaborable"))
-                    {
-                        if ( F.opcional != null && !"cristianismo".equals(F.opcional.religion))
-                       {
-                           calendario.setBackgroundResourceForDate(
-                                   R.color.silver,
-                                   new Date(calendar.getTimeInMillis())
-                           );
+                    if (tipo.equals("innamovible") || tipo.equals("nolaborable")) {
+                        if (F.opcional != null && !"cristianismo".equals(F.opcional.religion)) {
+                            calendario.setBackgroundResourceForDate(
+                                    R.color.silver,
+                                    new Date(calendar.getTimeInMillis())
+                            );
 
-                       } else {
+                        } else {
                             calendario.setBackgroundResourceForDate(
                                     R.color.green,
                                     new Date(calendar.getTimeInMillis())
                             );
-                       }
+                        }
 
-                    } else if (tipo.equals("trasladable" ))
-                    {
+                    } else if (tipo.equals("trasladable")) {
                         calendario.setBackgroundResourceForDate(
                                 R.color.yellow,
                                 new Date(calendar.getTimeInMillis())
@@ -572,16 +560,16 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             rootView = inflater.inflate(R.layout.fragment_calendario, container, false);
 
             // Registro como sucriptor
-            if(!EventBus.getDefault().isRegistered(this))
+            if (!EventBus.getDefault().isRegistered(this))
                 EventBus.getDefault().registerSticky(this);
 
             return rootView;
         }
 
-        public void onEvent(SyncEvent event){
+        public void onEvent(SyncEvent event) {
             Log.i("Debugeando", "Evento recibido en el fragmento de calendario :)");
 
-            if ( event.getType() == "update")
+            if (event.getType() == "update")
                 this.setColorsDates();
         }
 

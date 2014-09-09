@@ -14,6 +14,7 @@
         <item name="android:background">@color/red</item>
         <item name="android:titleTextStyle">@style/titleTextStyleCustom</item>
     </style>
+
     <style name="titleTextStyleCustom" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textColor">@color/white</item>
     </style>
@@ -22,6 +23,7 @@
     <style name="ActionBarTabStyleCustom" parent="@android:style/Widget.Holo.ActionBar.TabView">
         <item name="android:background">@drawable/tab_bar_background</item>
     </style>
+
     <style name="ActionBarTabStyleTextCustom" parent="@android:style/Widget.Holo.ActionBar.TabText">
         <item name="android:textColor">@color/red</item>
     </style>

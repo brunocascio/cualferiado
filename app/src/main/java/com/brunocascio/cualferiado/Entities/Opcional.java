@@ -13,12 +13,13 @@ public class Opcional extends SugarRecord<Opcional> {
     public String religion;
     public String origen;
 
-    public Opcional() {}
+    public Opcional() {
+    }
 
     public Opcional(String tipo, String religion, String origen) {
         Log.i("Opcional", "Agregado opcional");
-        this.tipo     = tipo;
+        this.tipo = tipo;
         this.religion = religion;
-        this.origen   = origen;
+        this.origen = origen;
     }
 }

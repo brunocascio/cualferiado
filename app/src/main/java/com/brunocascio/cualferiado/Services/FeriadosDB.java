@@ -36,7 +36,7 @@ public class FeriadosDB extends Application {
      *
      *  @return void
      */
-    public static void syncData(Context context){
+    public static void syncData(Context context) {
 
         preferences = context.getApplicationContext().getSharedPreferences("dataServer", 0);
 
@@ -68,8 +68,7 @@ public class FeriadosDB extends Application {
          *  Comparo si es la primera vez que se cargan,
          *  o bien los feriados estan desactualizados.
          */
-        if ( lastUpdate == 0 || lastUpdate < lastCheck)
-        {
+        if (lastUpdate == 0 || lastUpdate < lastCheck) {
             Log.i("Requiere sincronización?", "SI");
             //
             // Guardo los feriados en la base de datos.
@@ -88,11 +87,11 @@ public class FeriadosDB extends Application {
                     Feriado.saveInTx(L);
 
                     // Guardo los opcionales y actualizo las FK
-                    for (Feriado F: L){
-                        if ( F.opcional != null){
+                    for (Feriado F : L) {
+                        if (F.opcional != null) {
                             Opcional o = new Opcional();
-                            o.origen   = F.opcional.origen;
-                            o.tipo     = F.opcional.tipo;
+                            o.origen = F.opcional.origen;
+                            o.tipo = F.opcional.tipo;
                             o.religion = F.opcional.religion;
                             o.save();
 
