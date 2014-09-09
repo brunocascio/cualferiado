@@ -1,5 +1,6 @@
 package com.brunocascio.cualferiado;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -272,9 +273,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
                 msg = "LABORABLE: ";
                 if (lastFeriado.tipo.equals("nolaborable")) {
-                    msg += "No";
-                } else {
                     msg += "Si";
+                } else {
+                    msg += "No";
                 }
                 lbl_laborable.setText(msg);
                 trLaborable.addView(lbl_laborable); // add the column to the table row here
@@ -414,6 +415,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     /**
      * Fragmento que muestra el calendario
      */
+    @SuppressLint("ValidFragment")
     public class CalendarioFragment extends Fragment {
 
         private View rootView;
@@ -593,6 +595,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         }
     }
 
+    @SuppressLint("ValidFragment")
     public class DFragment extends DialogFragment {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
