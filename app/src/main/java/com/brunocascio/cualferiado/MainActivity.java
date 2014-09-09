@@ -6,7 +6,11 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
@@ -204,8 +208,15 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         public void onEvent(SyncEvent event) {
             Log.i("Debugeando", "Evento recibido en el fragmento feriado actual :)");
 
-            if (event.getType() == "update")
+            if (event.getType() == "update") {
                 this.setFeriadoActual();
+
+                // Send data to widget
+                Context context = getActivity().getApplicationContext();
+                Intent i = new Intent(context, CurrentWidget.class);
+                i.setAction("com.brunocascio.cualferiado.SETTING_UPDATE");
+                context.sendBroadcast(i);
+            }
 
             Toast.makeText(this.getActivity(), event.getMessage(), Toast.LENGTH_SHORT).show();
         }
