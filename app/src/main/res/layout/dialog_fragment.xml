@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <ImageView
+        android:src="@drawable/ic_action_help"
+        android:layout_width="match_parent"
+        android:layout_height="54sp"
+        android:scaleType="center"
+        android:background="@color/red"
+        android:contentDescription="@string/app_name" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="20sp"
+        android:gravity="center_vertical|center_horizontal">
+
+        <TableRow
+            android:paddingBottom="10dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="50sp"
+                android:layout_height="50sp"
+                android:id="@+id/color_yellow"
+                android:background="@color/yellow"
+                android:layout_marginRight="10sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/trasladable"
+                android:id="@+id/text_trasladable"
+                android:textColor="@color/grey"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:textSize="20sp" />
+
+        </TableRow>
+
+        <TableRow
+            android:paddingBottom="10dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="50sp"
+                android:layout_height="50sp"
+                android:id="@+id/color_green"
+                android:background="@color/green"
+                android:layout_marginRight="10sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/nolaborable"
+                android:id="@+id/text_nolaborable"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/grey"
+                android:textStyle="bold"
+                android:textSize="20sp" />
+        </TableRow>
+
+        <TableRow
+            android:paddingBottom="10dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="50sp"
+                android:layout_height="50sp"
+                android:id="@+id/color_silver"
+                android:background="@color/silver"
+                android:layout_marginRight="10sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/other"
+                android:id="@+id/text_other"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/grey"
+                android:textStyle="bold"
+                android:textSize="20sp" />
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>

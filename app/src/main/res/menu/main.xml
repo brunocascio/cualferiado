@@ -7,6 +7,13 @@
         android:orderInCategory="100"
         android:showAsAction="never" />-->
 
+    <item android:id="@+id/action_help"
+        android:icon="@drawable/ic_action_help"
+        android:title="@string/action_help"
+        android:alphabeticShortcut="h"
+        android:orderInCategory="1"
+        android:showAsAction="always" />
+
     <item android:id="@+id/action_actualizar"
         android:title="@string/action_actualizar"
         android:orderInCategory="101"

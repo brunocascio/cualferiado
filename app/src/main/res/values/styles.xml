@@ -10,7 +10,6 @@
         <item name="android:actionOverflowButtonStyle">@style/ActionBarTabStyleButtonCustom</item>
     </style>
 
-
     <style name="ActionBarStyleCustom" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:background">@color/red</item>
         <item name="android:titleTextStyle">@style/titleTextStyleCustom</item>

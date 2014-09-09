@@ -8,5 +8,10 @@
     <string name="title_next_section">Próximo</string>
     <string name="action_exit">Salir</string>
     <string name="action_actualizar">Actualizar</string>
+    <string name="action_help">Ayuda</string>
+    <string name="trasladable">Trasladable</string>
+    <string name="nolaborable">No Laborable</string>
+    <string name="other">Otro</string>
+    <string name="ok">OK</string>
 
 </resources>

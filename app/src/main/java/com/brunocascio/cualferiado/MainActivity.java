@@ -1,11 +1,15 @@
 package com.brunocascio.cualferiado;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -23,7 +27,6 @@ import android.widget.Toast;
 
 import com.brunocascio.cualferiado.Entities.Feriado;
 import com.brunocascio.cualferiado.Services.FeriadosDB;
-import com.brunocascio.cualferiado.Services.FeriadosREST;
 import com.brunocascio.cualferiado.Services.SyncEvent;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
@@ -123,6 +126,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             case R.id.action_actualizar:
                 FeriadosDB.syncData(getApplicationContext());
                 break;
+            case R.id.action_help:
+                DFragment dFragment = new DFragment();
+                // Show DialogFragment
+                dFragment.show(getSupportFragmentManager(), "Indicadores");
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -132,6 +140,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public void onTabSelected(ActionBar.Tab tab, android.app.FragmentTransaction fragmentTransaction) {
         // When the given tab is selected, switch to the corresponding page in
         // the ViewPager.
+        if ( (tab.getPosition() + 1) == getActionBar().getTabCount() ) {
+            getActionBar().setHomeButtonEnabled(true);
+        }
         mViewPager.setCurrentItem(tab.getPosition());
     }
 
@@ -440,7 +451,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 calendario = new CaldroidFragment();
 
                 FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-                t.replace(R.id.container_calendar, calendario);
+                t.add(R.id.container_calendar, calendario);
                 t.commit();
 
                 // Set color to actual date
@@ -594,4 +605,25 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         }
     }
 
+    public class DFragment extends DialogFragment {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            // Get the layout inflater
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+
+            // Inflate and set the layout for the dialog
+            // Pass null as the parent view because its going in the dialog layout
+            builder.setView(inflater.inflate(R.layout.dialog_fragment, null))
+                    // Add action buttons
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            // sign in the user ...
+                        }
+                    });
+
+            return builder.create();
+        }
+    }
 }
