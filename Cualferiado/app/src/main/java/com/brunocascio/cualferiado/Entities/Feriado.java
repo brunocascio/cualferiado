@@ -89,5 +89,4 @@ public class Feriado extends SugarRecord<Feriado> {
         return monthNames[this.mes - 1];
     }
 
-
 }

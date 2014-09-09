@@ -12,9 +12,6 @@ import android.widget.Toast;
 
 import com.brunocascio.cualferiado.Entities.Feriado;
 import com.brunocascio.cualferiado.Services.FeriadosDB;
-import com.brunocascio.cualferiado.Services.SyncEvent;
-
-import de.greenrobot.event.EventBus;
 
 
 /**
@@ -23,25 +20,6 @@ import de.greenrobot.event.EventBus;
 public class CurrentWidget extends AppWidgetProvider {
 
     public static final String DB_UPDATE = "com.brunocascio.cualferiado.SETTING_UPDATE";
-
-    @Override
-    public void onReceive(Context context, Intent intent)
-    {
-        super.onReceive(context, intent);
-        String action = intent.getAction();
-        if (action.equals(DB_UPDATE))
-        {
-            if (intent.hasExtra("check")){
-                Log.i("widget","verifica en el server");
-                FeriadosDB.syncData(context);
-            }
-            AppWidgetManager gm = AppWidgetManager.getInstance(context);
-            int[] ids = gm.getAppWidgetIds(new ComponentName(context, CurrentWidget.class));
-            this.onUpdate(context, gm, ids);
-
-            Toast.makeText(context,"Actualizado",Toast.LENGTH_SHORT);
-        }
-    }
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
@@ -57,7 +35,7 @@ public class CurrentWidget extends AppWidgetProvider {
 
         Intent updateIntent = new Intent();
         updateIntent.setAction(DB_UPDATE);
-        updateIntent.putExtra("check",true);
+        updateIntent.putExtra("check", true);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context, 0, updateIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -65,6 +43,23 @@ public class CurrentWidget extends AppWidgetProvider {
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
+        String action = intent.getAction();
+        if (action.equals(DB_UPDATE)) {
+            if (intent.hasExtra("check")) {
+                Log.i("widget", "verifica en el server");
+                FeriadosDB.syncData(context);
+            }
+            AppWidgetManager gm = AppWidgetManager.getInstance(context);
+            int[] ids = gm.getAppWidgetIds(new ComponentName(context, CurrentWidget.class));
+            this.onUpdate(context, gm, ids);
+
+            Toast.makeText(context, "Actualizado", Toast.LENGTH_SHORT);
+        }
     }
 
     @Override
