@@ -282,9 +282,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
                 msg = "LABORABLE: ";
                 if (lastFeriado.tipo.equals("nolaborable")) {
-                    msg += "Si";
-                } else {
                     msg += "No";
+                } else {
+                    msg += "Si";
                 }
                 lbl_laborable.setText(msg);
                 trLaborable.addView(lbl_laborable); // add the column to the table row here
