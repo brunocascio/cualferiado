@@ -6,9 +6,9 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 import com.brunocascio.cualferiado.Entities.Feriado;
 import com.brunocascio.cualferiado.Services.FeriadosDB;
@@ -19,22 +19,37 @@ import com.brunocascio.cualferiado.Services.FeriadosDB;
  */
 public class CurrentWidget extends AppWidgetProvider {
 
-    public static final String DB_UPDATE = "com.brunocascio.cualferiado.SETTING_UPDATE";
+    public static final String W_UPDATE = "com.brunocascio.cualferiado.W_UPDATE";
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+    private SharedPreferences preferences;
+    private boolean otherHolidays;
 
-        Log.i("Widget", "Corre update en widget");
+    void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                         int appWidgetId) {
+
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.current_widget);
 
-        Feriado lastFeriado = Feriado.getProximoFeriado();
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        otherHolidays = preferences.getBoolean("hide_other_holidays", true);
+
+        Feriado lastFeriado = Feriado.getProximoFeriado(otherHolidays);
 
         views.setTextViewText(R.id.nFeriadoText, String.valueOf(lastFeriado.dia));
-        views.setTextViewText(R.id.mFeriadoText, String.valueOf(lastFeriado.getMesString()));
+        views.setTextViewText(R.id.mFeriadoText, "/" + String.valueOf(lastFeriado.mes));
+
+        // dìas restantes
+        int diasRestantes = lastFeriado.daysToHoliday(context);
+        String restantes = "";
+        if (diasRestantes == 1) {
+            restantes = diasRestantes + " día restante";
+        } else {
+            restantes = diasRestantes + " días restantes";
+        }
+        views.setTextViewText(R.id.drFeriadoText, restantes);
 
         Intent updateIntent = new Intent();
-        updateIntent.setAction(DB_UPDATE);
+        updateIntent.setAction(W_UPDATE);
         updateIntent.putExtra("check", true);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context, 0, updateIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -49,16 +64,14 @@ public class CurrentWidget extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
         String action = intent.getAction();
-        if (action.equals(DB_UPDATE)) {
+
+        if (action.equals(W_UPDATE)) {
             if (intent.hasExtra("check")) {
-                Log.i("widget", "verifica en el server");
                 FeriadosDB.syncData(context);
             }
             AppWidgetManager gm = AppWidgetManager.getInstance(context);
             int[] ids = gm.getAppWidgetIds(new ComponentName(context, CurrentWidget.class));
             this.onUpdate(context, gm, ids);
-
-            Toast.makeText(context, "Actualizado", Toast.LENGTH_SHORT);
         }
     }
 

@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.util.Log;
 
 import com.brunocascio.cualferiado.Entities.Feriado;
 import com.brunocascio.cualferiado.Entities.Opcional;
@@ -69,7 +68,6 @@ public class FeriadosDB extends Application {
          *  o bien los feriados estan desactualizados.
          */
         if (lastUpdate == 0 || lastUpdate < lastCheck) {
-            Log.i("Requiere sincronización?", "SI");
             //
             // Guardo los feriados en la base de datos.
             // Para ello utilizo un bulk insert para no sobrecargar la DB
@@ -118,7 +116,6 @@ public class FeriadosDB extends Application {
 
         } else {
             EventBus.getDefault().postSticky(new SyncEvent("Actualizado"));
-            Log.i("Requiere sincronización?", "NO");
         }
 
     }

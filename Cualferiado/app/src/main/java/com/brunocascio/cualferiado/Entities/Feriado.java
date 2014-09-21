@@ -1,6 +1,13 @@
 package com.brunocascio.cualferiado.Entities;
 
+import android.content.Context;
+
 import com.orm.SugarRecord;
+
+import net.danlew.android.joda.JodaTimeAndroid;
+
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
 
 import java.util.Calendar;
 import java.util.List;
@@ -37,7 +44,7 @@ public class Feriado extends SugarRecord<Feriado> {
         return monthNames[mes - 1];
     }
 
-    public static Feriado getProximoFeriado() {
+    public static Feriado getProximoFeriado(boolean withOutAditionals) {
 
         Calendar calendar = Calendar.getInstance();
 
@@ -45,15 +52,28 @@ public class Feriado extends SugarRecord<Feriado> {
         String currentDay = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
 
         List<Feriado> L = Feriado.find(Feriado.class,
-                "(mes = ? AND dia > ?) OR mes > ?",                 // query
+                "(mes = ? AND dia > ?) OR mes > ?",                   // query
                 new String[]{currentMonth, currentDay, currentMonth}, // parameters
                 null,                                                 // groupby
                 "mes ASC, dia ASC",                                   // order
-                "1"                                                   // limit
+                null                                                  // limit
         );
 
-        if (!L.isEmpty()) {
-            return L.get(0);
+        if (withOutAditionals) {
+            // Devuelvo feriados que no sean de otras religiones (si es true)
+            for (Feriado F : L) {
+                if (F.opcional == null) {
+                    return F;
+                } else {
+                    if (F.opcional.religion == "cristianismo") {
+                        return F;
+                    }
+                }
+            }
+        } else {
+            if (!L.isEmpty()) {
+                return L.get(0);
+            }
         }
 
         // Si no existe próximo feriado, retorno el primero del año
@@ -70,8 +90,8 @@ public class Feriado extends SugarRecord<Feriado> {
 
         List<Feriado> L = Feriado.find(
                 Feriado.class,                          // Class Object
-                "mes = ? AND dia = ?",                  // query
-                new String[]{monthString, dayString},   // parameters
+                "(mes = ? AND dia = ?) OR (traslado = ? AND mes = ?)",  // query
+                new String[]{monthString, dayString, dayString, monthString},   // parameters
                 null,                                   // groupby
                 null,                                   // order
                 "1"                                     // limit
@@ -82,6 +102,16 @@ public class Feriado extends SugarRecord<Feriado> {
         }
 
         return null;
+    }
+
+    public int daysToHoliday(Context context) {
+        // Initialize lib
+        JodaTimeAndroid.init(context);
+
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+
+        return Math.abs(Days.daysBetween(new LocalDate(), new LocalDate(year, this.mes, this.dia)).getDays());
     }
 
     public String getMesString() {

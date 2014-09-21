@@ -1,0 +1,13 @@
+<resources>
+    <string name="title_activity_settings">Opciones</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_other_holidays">Ocultar otros Feriados</string>
+    <string name="pref_description_other_holidays">
+        Oculta los feriados relacionados con otras religiones u otros orígenes.
+    </string>
+</resources>

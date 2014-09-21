@@ -1,7 +1,5 @@
 package com.brunocascio.cualferiado.Entities;
 
-import android.util.Log;
-
 import com.orm.SugarRecord;
 
 /**
@@ -17,7 +15,6 @@ public class Opcional extends SugarRecord<Opcional> {
     }
 
     public Opcional(String tipo, String religion, String origen) {
-        Log.i("Opcional", "Agregado opcional");
         this.tipo = tipo;
         this.religion = religion;
         this.origen = origen;

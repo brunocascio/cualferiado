@@ -2,60 +2,76 @@
 <pre-dex-items>
 
     <item
+        dex="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/pre-dexed/debug/retrofit-1.6.1-5163f9a216257a0511d3022622d59f4a38cbcb27.jar"
+        jar="/home/d3m0n/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit/retrofit/1.6.1/efb0a36546aa8857ab8df358b106c1817e03cbee/retrofit-1.6.1.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="efb0a36546aa8857ab8df358b106c1817e03cbee"/>
+    <item
         dex="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/pre-dexed/debug/gson-2.2.4-6797313cf0322887fe17a70cdfc24a3711b5be34.jar"
         jar="/home/d3m0n/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.2.4/a60a5e993c98c864010053cb901b7eab25306568/gson-2.2.4.jar"
-        jumboMode="false" revision="20.0.0" sha1="a60a5e993c98c864010053cb901b7eab25306568" />
-    <item
-        dex="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/pre-dexed/debug/okhttp-urlconnection-2.0.0-c3e648d5bbc0af7c65207171d4aab9cac16b75de.jar"
-        jar="/home/d3m0n/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp-urlconnection/2.0.0/afe8399d352713b66e597e9670c741d1e60ae923/okhttp-urlconnection-2.0.0.jar"
-        jumboMode="false" revision="20.0.0" sha1="afe8399d352713b66e597e9670c741d1e60ae923" />
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="a60a5e993c98c864010053cb901b7eab25306568"/>
     <item
         dex="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/pre-dexed/debug/classes-03a4e1d5ae931dfe637643f155d61b4fe9000661.jar"
         jar="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/classes.jar"
-        jumboMode="false" revision="20.0.0" sha1="8694693636ab36910c8100ce527c258ff3ebece0" />
-    <item
-        dex="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/pre-dexed/debug/classes-d0404ee359f6fd50c840d7740f135e4927820a50.jar"
-        jar="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/exploded-aar/com.roomorama/caldroid/1.1.0/classes.jar"
-        jumboMode="false" revision="20.0.0" sha1="6a354df4852e8ff0b200f6bb3c45a6abe4118a9a" />
-    <item
-        dex="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/pre-dexed/debug/classes-b0051218098fde539efd6f25714f8fd530d99e76.jar"
-        jar="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/exploded-aar/com.android.support/support-v13/20.0.0/classes.jar"
-        jumboMode="false" revision="20.0.0" sha1="e128103d5281ddd26195a7f980b36d0d005a4e56" />
-    <item
-        dex="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/pre-dexed/debug/eventbus-2.2.1-5d13d4444cd204fa41ba1fd30b40a92c844e4986.jar"
-        jar="/home/d3m0n/.gradle/caches/modules-2/files-2.1/de.greenrobot/eventbus/2.2.1/a18ff12a9ab5ae52fd30d42f134517997568231e/eventbus-2.2.1.jar"
-        jumboMode="false" revision="20.0.0" sha1="a18ff12a9ab5ae52fd30d42f134517997568231e" />
-    <item
-        dex="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/pre-dexed/debug/okio-1.0.0-1cd5b97403a1ec2d4bf306b40d45a98207780ed8.jar"
-        jar="/home/d3m0n/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.0.0/2534c458682c73f5b9871131ab3098d3f987ca3/okio-1.0.0.jar"
-        jumboMode="false" revision="20.0.0" sha1="02534c458682c73f5b9871131ab3098d3f987ca3" />
-    <item
-        dex="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/pre-dexed/debug/retrofit-1.6.1-5163f9a216257a0511d3022622d59f4a38cbcb27.jar"
-        jar="/home/d3m0n/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit/retrofit/1.6.1/efb0a36546aa8857ab8df358b106c1817e03cbee/retrofit-1.6.1.jar"
-        jumboMode="false" revision="20.0.0" sha1="efb0a36546aa8857ab8df358b106c1817e03cbee" />
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
     <item
         dex="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/pre-dexed/debug/internal_impl-20.0.0-e1e985057bc21948d75e977df93fde79eb5b8845.jar"
         jar="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/libs/internal_impl-20.0.0.jar"
-        jumboMode="false" revision="20.0.0" sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d" />
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
+    <item
+        dex="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/pre-dexed/debug/classes-d0404ee359f6fd50c840d7740f135e4927820a50.jar"
+        jar="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/exploded-aar/com.roomorama/caldroid/1.1.0/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="6a354df4852e8ff0b200f6bb3c45a6abe4118a9a"/>
     <item
         dex="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/pre-dexed/debug/classes-2a835104d38e4b699f4a0ba4bac42269b9592480.jar"
         jar="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/exploded-aar/com.github.satyan/sugar/1.3/classes.jar"
-        jumboMode="false" revision="20.0.0" sha1="07e07903922250dabf50c7d131d6fa069a050305" />
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="07e07903922250dabf50c7d131d6fa069a050305"/>
+    <item
+        dex="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/pre-dexed/debug/classes-b0051218098fde539efd6f25714f8fd530d99e76.jar"
+        jar="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/exploded-aar/com.android.support/support-v13/20.0.0/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="e128103d5281ddd26195a7f980b36d0d005a4e56"/>
     <item
         dex="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/pre-dexed/debug/support-annotations-20.0.0-33a5028075398edc87b9fc3ceeb1eb94ead72c25.jar"
         jar="/home/d3m0n/Descargas/android-studio/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0.jar"
-        jumboMode="false" revision="20.0.0" sha1="9d9013e9ff35fc3756411e62873c363c70c638fa" />
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
     <item
-        dex="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/pre-dexed/debug/okhttp-2.0.0-7fa5579941f5c6f5f9202096ca988485edb8fe63.jar"
-        jar="/home/d3m0n/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp/2.0.0/4c8d1536dba3812cc1592090dc20c47a4ed3c35e/okhttp-2.0.0.jar"
-        jumboMode="false" revision="20.0.0" sha1="4c8d1536dba3812cc1592090dc20c47a4ed3c35e" />
+        dex="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/pre-dexed/debug/eventbus-2.2.1-5d13d4444cd204fa41ba1fd30b40a92c844e4986.jar"
+        jar="/home/d3m0n/.gradle/caches/modules-2/files-2.1/de.greenrobot/eventbus/2.2.1/a18ff12a9ab5ae52fd30d42f134517997568231e/eventbus-2.2.1.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="a18ff12a9ab5ae52fd30d42f134517997568231e"/>
     <item
         dex="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/pre-dexed/debug/hirondelle-date4j-1.5.0-60d16d2f2d85330dad5475177d627355e4eb82bd.jar"
         jar="/home/d3m0n/.gradle/caches/modules-2/files-2.1/com.darwinsys/hirondelle-date4j/1.5.0/6beb032c42dd0fb9e66429af346e772d843aaef9/hirondelle-date4j-1.5.0.jar"
-        jumboMode="false" revision="20.0.0" sha1="6beb032c42dd0fb9e66429af346e772d843aaef9" />
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="6beb032c42dd0fb9e66429af346e772d843aaef9"/>
+    <item
+        dex="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/pre-dexed/debug/classes-7b44a828349944d5961e36661d16cfe65c7c5314.jar"
+        jar="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/exploded-aar/net.danlew/android.joda/2.4.0/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="fbf3f2e9e9eb8c9aeb41977952ceb5f613c4baf1"/>
     <item
         dex="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/pre-dexed/debug/internal_impl-20.0.0-5a668c1b8a33a41860c2095ccaecc36b8154d4a9.jar"
         jar="/home/d3m0n/AndroidStudioProjects/Cualferiado/app/build/intermediates/exploded-aar/com.android.support/support-v13/20.0.0/libs/internal_impl-20.0.0.jar"
-        jumboMode="false" revision="20.0.0" sha1="27bbd3982cdfe4468a9bf99c8c773734a9049e33" />
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="27bbd3982cdfe4468a9bf99c8c773734a9049e33"/>
 
 </pre-dex-items>
