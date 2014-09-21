@@ -53,6 +53,25 @@
 		
 	</section>
 
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$.ajax({
+			  url: "public/index.php/proximo",
+			  dataType: 'json',
+			  crossDomain: true,
+			  headers: {
+			  	"Access-Control-Allow-Origin": "*",
+			  	"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
+			  },
+			  //data: data,
+			  success: function(data){
+			  	console.log(data.fecha)
+			  },
+			});
+		})
+	</script>
 </body>
 </html>
