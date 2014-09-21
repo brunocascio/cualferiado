@@ -102,15 +102,55 @@ $app->get('/feriados', function() use ($app){
 
 /*
 | -------------------------------------------------------
-|   Retorna el próximo de feriados
+|   Retorna el próximo de feriado
 | -------------------------------------------------------
 |
 */
-$app->get('/feriados', function() use ($app){
+$app->get('/proximo', function() use ($app) {
 
-    foreach ($app->feriados as $key => $value) {
-        echo $key.' - '.$value;
+    $arrayF = json_decode($app->feriados, true);
+
+    // Hoy
+    $dia        = date('d');
+    $mes        = date('m');
+    $anio       = date('Y');
+
+    // variables para el manejo de la estructura
+    $i          = 0;
+    $total      = count($arrayF); 
+    $encontrado = false;
+
+
+    // Busco el próximo feriado
+    while ( ($total > 0) && ($i < $total) && !($encontrado) ) {
+
+        $f = $arrayF[$i];
+
+        // Feriado dentro del mes actual, luego del día de hoy
+        if ( ($f['mes'] == $mes) && ($f['dia'] >= $dia) ) {
+            
+            $fechaFeriado = date('Y')."-".$f['mes']."-".$f['dia'];
+            $encontrado = true;
+
+        // Feriado proximo en siguiente mes
+        } elseif ( $f['mes'] > $mes ) { 
+
+            $fechaFeriado = date('Y')."-".$f['mes']."-".$f['dia'];
+            $encontrado = true;           
+        }
+
+        $i++;
     }
+
+    // Año nuevo como fallback (por ejemplo si hoy es 27 de diciembre)
+    if ( !$encontrado )
+        $fechaFeriado =  (date('Y') + 1)."-01-01";
+    
+
+    // Retorno feriado
+    echo json_encode(array(
+        "fecha" => date("d-m-Y", strtotime($fechaFeriado))
+    ));
 
 });
 
