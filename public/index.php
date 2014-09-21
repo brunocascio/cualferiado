@@ -100,5 +100,20 @@ $app->get('/feriados', function() use ($app){
 });
 
 
+/*
+| -------------------------------------------------------
+|   Retorna el próximo de feriados
+| -------------------------------------------------------
+|
+*/
+$app->get('/feriados', function() use ($app){
+
+    foreach ($app->feriados as $key => $value) {
+        echo $key.' - '.$value;
+    }
+
+});
+
+
 
 $app->run();
