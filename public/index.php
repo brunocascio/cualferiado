@@ -25,7 +25,6 @@ $app = new \Slim\Slim();
 
 ini_set('date.timezone', 'America/Argentina/Buenos_Aires');
 
-
 /*
 | -------------------------------------------------------
 |   Setea el encabezado JSON para todas las respuestas
@@ -108,6 +107,9 @@ $app->get('/feriados', function() use ($app){
 */
 $app->get('/proximo', function() use ($app) {
 
+    $others = $app->request()->params('others');
+    $others = ($others && $others =='true');
+
     $arrayF = json_decode($app->feriados, true);
 
     // Hoy
@@ -126,17 +128,22 @@ $app->get('/proximo', function() use ($app) {
 
         $f = $arrayF[$i];
 
-        // Feriado dentro del mes actual, luego del día de hoy
-        if ( ($f['mes'] == $mes) && ($f['dia'] >= $dia) ) {
+        // Feriado dentro del mes actual, luego del día de hoy ó del mes siguiente
+        if ( ($f['mes'] == $mes) && ($f['dia'] >= $dia) || ( $f['mes'] > $mes ) ) {
             
-            $fechaFeriado = date('Y')."-".$f['mes']."-".$f['dia'];
-            $encontrado = true;
+            $encontrado   = true;
+            $fechaFeriado = array('anio' => (int) date('Y'), 'mes' => $f['mes'], 'dia' => $f['dia']);
 
-        // Feriado proximo en siguiente mes
-        } elseif ( $f['mes'] > $mes ) { 
+            // Verifica si el feriado es de alguna religion o origen específico
+            $isOther = ( array_key_exists('opcional', $f) && 
+                        ( ( $f['opcional']['tipo'] == 'religion' && 
+                            $f['opcional']['religion'] != 'cristianismo') || 
+                            $f['opcional']['tipo']  == 'origen') );
 
-            $fechaFeriado = date('Y')."-".$f['mes']."-".$f['dia'];
-            $encontrado = true;           
+            // Compara si se desean o no los otros feriados
+            if ( $isOther && !$others ) {
+                $encontrado = false;
+            }
         }
 
         $i++;
@@ -144,12 +151,12 @@ $app->get('/proximo', function() use ($app) {
 
     // Año nuevo como fallback (por ejemplo si hoy es 27 de diciembre)
     if ( !$encontrado )
-        $fechaFeriado =  (date('Y') + 1)."-01-01";
+        $fechaFeriado =  array('anio' => (int) date('Y') + 1, 'mes' => '01', 'dia' => '01');
     
 
     // Retorno feriado
     echo json_encode(array(
-        "fecha" => date("d-m-Y", strtotime($fechaFeriado))
+        "fecha" => $fechaFeriado
     ));
 
 });

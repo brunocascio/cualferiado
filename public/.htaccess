@@ -10,3 +10,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.php [QSA,L]
 
 RewriteRule ^data/ index.php [QSA,L]
+
+Header add Access-Control-Allow-Origin "*"
+Header add Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept"
+Header add Access-Control-Allow-Methods "*"
