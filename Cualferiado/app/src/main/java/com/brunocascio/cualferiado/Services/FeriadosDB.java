@@ -51,7 +51,8 @@ public class FeriadosDB extends Application {
             @Override
             public void success(FeriadosREST.Status resp, Response response2) {
                 // Obtengo el tiempo en segundos de la última actualización
-                lastCheck = resp.status;
+                if ( resp != null)
+                    lastCheck = resp.status;
             }
 
             @Override

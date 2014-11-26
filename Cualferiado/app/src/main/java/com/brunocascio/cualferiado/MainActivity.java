@@ -335,7 +335,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 lbl_laborable.setTextColor(Color.GRAY); // set the color
 
                 msg = "LABORABLE: ";
-                if (lastFeriado.tipo.equals("nolaborable") || lastFeriado.tipo.equals("trasladable")) {
+                if (lastFeriado.tipo.equals("nolaborable") || lastFeriado.tipo.equals("trasladable")
+                        || lastFeriado.tipo.equals("innamovible")) {
                     msg += "No";
                 } else {
                     msg += "Si";
