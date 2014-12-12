@@ -53,7 +53,8 @@ $app->notFound(function () use ($app) {
 | -------------------------------------------------------
 |
 */
-$app->feriados = file_get_contents('data/2014.json', false, null);
+$app->anio_actual = date("Y");
+$app->feriados = file_get_contents('data/'.$app->anio_actual.'.json', false, null);
 
 
 /*
@@ -96,6 +97,23 @@ $app->get('/feriados', function() use ($app){
 
 	echo $app->feriados;
 
+});
+
+/*
+| -------------------------------------------------------
+|   Retorna el JSON de feriados para un año determinado
+| -------------------------------------------------------
+|
+*/
+$app->get('/feriados/:year', function($year) use ($app){
+
+	$file = 'data/'.$year.'.json';
+
+	if ( file_exists($file) ) {
+		echo file_get_contents($file, false, null);
+	} else {
+		$app->notFound();
+	}
 });
 
 
