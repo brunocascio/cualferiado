@@ -336,7 +336,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
                 msg = "LABORABLE: ";
                 if (lastFeriado.tipo.equals("nolaborable") || lastFeriado.tipo.equals("trasladable")
-                        || lastFeriado.tipo.equals("innamovible")) {
+                        || lastFeriado.tipo.equals("inamovible")) {
                     msg += "No";
                 } else {
                     msg += "Si";
@@ -488,6 +488,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             } else {
 
                 calendario = new CaldroidFragment();
+                Bundle args = new Bundle();
+                args.putBoolean(CaldroidFragment.SQUARE_TEXT_VIEW_CELL, true);
+                calendario .setArguments(args);
+
                 FragmentTransaction t = getSupportFragmentManager().beginTransaction();
                 t.add(R.id.container_calendar, calendario);
                 t.commit();
@@ -567,7 +571,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
                     String tipo = F.tipo;
 
-                    if (tipo.equals("innamovible") || tipo.equals("nolaborable")) {
+                    if (tipo.equals("inamovible") || tipo.equals("nolaborable")) {
                         if (F.opcional != null && !"cristianismo".equals(F.opcional.religion)) {
                             calendario.setBackgroundResourceForDate(
                                     R.color.silver,
