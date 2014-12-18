@@ -1,0 +1,132 @@
+-- Merging decision tree log ---
+manifest
+ADDED from AndroidManifest.xml:2:1
+	xmlns:android
+		ADDED from AndroidManifest.xml:2:11
+	package
+		ADDED from AndroidManifest.xml:3:5
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:versionName
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:versionCode
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+uses-permission#android.permission.INTERNET
+ADDED from AndroidManifest.xml:6:5
+	android:name
+		ADDED from AndroidManifest.xml:6:22
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from AndroidManifest.xml:7:5
+	android:name
+		ADDED from AndroidManifest.xml:7:22
+application
+ADDED from AndroidManifest.xml:9:5
+MERGED from com.android.support:support-v13:20.0.0:17:5
+MERGED from com.android.support:support-v4:21.0.2:16:5
+MERGED from com.github.satyan:sugar:1.3:11:5
+MERGED from com.android.support:support-v4:21.0.2:16:5
+MERGED from com.android.support:support-v4:21.0.2:16:5
+MERGED from net.danlew:android.joda:2.5.1:11:5
+	android:label
+		ADDED from AndroidManifest.xml:13:9
+	android:allowBackup
+		ADDED from AndroidManifest.xml:11:9
+	android:icon
+		ADDED from AndroidManifest.xml:12:9
+	android:theme
+		ADDED from AndroidManifest.xml:14:9
+	android:name
+		ADDED from AndroidManifest.xml:10:9
+activity#com.brunocascio.cualferiado.MainActivity
+ADDED from AndroidManifest.xml:15:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:18:13
+	android:label
+		ADDED from AndroidManifest.xml:17:13
+	android:name
+		ADDED from AndroidManifest.xml:16:13
+meta-data#DATABASE
+ADDED from AndroidManifest.xml:21:13
+	android:name
+		ADDED from AndroidManifest.xml:22:17
+	android:value
+		ADDED from AndroidManifest.xml:23:17
+meta-data#VERSION
+ADDED from AndroidManifest.xml:24:13
+	android:name
+		ADDED from AndroidManifest.xml:25:17
+	android:value
+		ADDED from AndroidManifest.xml:26:17
+meta-data#QUERY_LOG
+ADDED from AndroidManifest.xml:27:13
+	android:name
+		ADDED from AndroidManifest.xml:28:17
+	android:value
+		ADDED from AndroidManifest.xml:29:17
+meta-data#DOMAIN_PACKAGE_NAME
+ADDED from AndroidManifest.xml:30:13
+	android:name
+		ADDED from AndroidManifest.xml:31:17
+	android:value
+		ADDED from AndroidManifest.xml:32:17
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:34:13
+action#android.intent.action.MAIN
+ADDED from AndroidManifest.xml:35:17
+	android:name
+		ADDED from AndroidManifest.xml:35:25
+category#android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:37:17
+	android:name
+		ADDED from AndroidManifest.xml:37:27
+receiver#com.brunocascio.cualferiado.CurrentWidget
+ADDED from AndroidManifest.xml:41:9
+	android:name
+		ADDED from AndroidManifest.xml:41:19
+intent-filter#android.appwidget.action.APPWIDGET_UPDATE+com.brunocascio.cualferiado.W_UPDATE
+ADDED from AndroidManifest.xml:42:13
+action#android.appwidget.action.APPWIDGET_UPDATE
+ADDED from AndroidManifest.xml:43:17
+	android:name
+		ADDED from AndroidManifest.xml:43:25
+action#com.brunocascio.cualferiado.W_UPDATE
+ADDED from AndroidManifest.xml:44:17
+	android:name
+		ADDED from AndroidManifest.xml:44:25
+meta-data#android.appwidget.provider
+ADDED from AndroidManifest.xml:47:13
+	android:resource
+		ADDED from AndroidManifest.xml:49:17
+	android:name
+		ADDED from AndroidManifest.xml:48:17
+activity#com.brunocascio.cualferiado.SettingsActivity
+ADDED from AndroidManifest.xml:52:9
+	android:label
+		ADDED from AndroidManifest.xml:54:13
+	android:parentActivityName
+		ADDED from AndroidManifest.xml:55:13
+	android:name
+		ADDED from AndroidManifest.xml:53:13
+meta-data#android.support.PARENT_ACTIVITY
+ADDED from AndroidManifest.xml:56:13
+	android:name
+		ADDED from AndroidManifest.xml:57:17
+	android:value
+		ADDED from AndroidManifest.xml:58:17
+uses-sdk
+INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
+MERGED from com.android.support:support-v13:20.0.0:16:5
+MERGED from com.android.support:support-v4:21.0.2:15:5
+MERGED from com.github.satyan:sugar:1.3:7:5
+MERGED from com.roomorama:caldroid:1.1.7:7:5
+MERGED from com.android.support:support-v4:21.0.2:15:5
+MERGED from com.android.support:support-v4:21.0.2:15:5
+MERGED from net.danlew:android.joda:2.5.1:7:5
+	android:targetSdkVersion
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:minSdkVersion
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
