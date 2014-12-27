@@ -77,7 +77,7 @@ public class Feriado extends SugarRecord<Feriado> {
         }
 
         // Si no existe próximo feriado, retorno el primero del año
-        return new Feriado(1, 1, 0, "Año Nuevo", "innamovible", null);
+        return new Feriado(1, 1, 0, "Año Nuevo", "inamovible", null);
     }
 
     public static Feriado getFeriado(int day, int month) {
@@ -111,7 +111,17 @@ public class Feriado extends SugarRecord<Feriado> {
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
 
-        return Math.abs(Days.daysBetween(new LocalDate(), new LocalDate(year, this.mes, this.dia)).getDays());
+        // Local Date
+        LocalDate localDate = new LocalDate();
+        // holiday date
+        LocalDate holidayDate = new LocalDate(year, this.mes, this.dia);
+
+        if ( (this.mes == 1) && (this.dia == 1) ) {
+            year += 1;
+            holidayDate = new LocalDate(year, this.mes, this.dia);
+        }
+
+        return Math.abs(Days.daysBetween(holidayDate,localDate).getDays());
     }
 
     public String getMesString() {

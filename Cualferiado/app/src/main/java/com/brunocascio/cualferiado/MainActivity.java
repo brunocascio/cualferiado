@@ -339,7 +339,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                         || lastFeriado.tipo.equals("inamovible")) {
                     msg += "No";
                 } else {
-                    msg += "Si";
+                    msg += "Sí";
                 }
                 lbl_laborable.setText(msg);
                 trLaborable.addView(lbl_laborable); // add the column to the table row here
