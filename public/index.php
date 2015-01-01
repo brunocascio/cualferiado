@@ -76,10 +76,10 @@ $app->get('/', function( ){
 | -------------------------------------------------------
 |
 */
-$app->get('/check', function() {
+$app->get('/check', function() use ($app){
 
 	echo json_encode(array(
-		'status' => filemtime('data/2014.json')
+		'status' => filemtime('data/'.$app->anio_actual.'.json')
 	));
     
 });
