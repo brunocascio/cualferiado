@@ -1,4 +1,4 @@
-    <?php
+<?php
 /**
  * Step 1: Require the Slim Framework
  *
@@ -150,7 +150,11 @@ $app->get('/proximo', function() use ($app) {
         if ( ($f['mes'] == $mes) && ($f['dia'] >= $dia) || ( $f['mes'] > $mes ) ) {
             
             $encontrado   = true;
-            $fechaFeriado = array('anio' => (int) date('Y'), 'mes' => $f['mes'], 'dia' => $f['dia']);
+            $fechaFeriado = array(
+		'anio' => (int) date('Y'),
+		'mes' => $f['mes'], 
+		'dia' => $f['dia'], 
+		'motivo' => $f['motivo']);
 
             // Verifica si el feriado es de alguna religion o origen específico
             $isOther = ( array_key_exists('opcional', $f) && 
@@ -161,7 +165,11 @@ $app->get('/proximo', function() use ($app) {
             // Compara si se desean o no los otros feriados
             if ( $isOther && !$others ) {
                 $encontrado = false;
-            }
+            } else {
+		$fechaFeriado['opcional'] = array(
+			$f['opcional']['tipo'] => $f['opcional'][$f['opcional']['tipo']]
+		);
+	    }
         }
 
         $i++;
