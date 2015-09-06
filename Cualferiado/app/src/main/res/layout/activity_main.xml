@@ -3,4 +3,4 @@
     android:id="@+id/pager"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context="com.brunocascio.cualferiado.MainActivity" />
+    tools:context="com.brunocascio.cualferiado2.MainActivity" />

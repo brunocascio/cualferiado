@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.brunocascio.cualferiado">
+    package="com.brunocascio.cualferiado2">
 
     <!-- permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,7 +13,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.brunocascio.cualferiado2.MainActivity"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait">
 
@@ -38,7 +38,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".CurrentWidget">
+        <receiver android:name="com.brunocascio.cualferiado2.CurrentWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="com.brunocascio.cualferiado.W_UPDATE" />
@@ -50,12 +50,12 @@
         </receiver>
 
         <activity
-            android:name=".SettingsActivity"
+            android:name="com.brunocascio.cualferiado2.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName="com.brunocascio.cualferiado2.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.brunocascio.cualferiado.MainActivity" />
+                android:value="com.brunocascio.cualferiado2.MainActivity" />
         </activity>
     </application>
 

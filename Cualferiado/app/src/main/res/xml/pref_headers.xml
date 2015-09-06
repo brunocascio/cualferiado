@@ -3,15 +3,15 @@
     <!-- These settings headers are only used on tablets. -->
 
     <header
-        android:fragment="com.brunocascio.cualferiado.SettingsActivity$GeneralPreferenceFragment"
+        android:fragment="com.brunocascio.cualferiado2.SettingsActivity$GeneralPreferenceFragment"
         android:title="@string/pref_header_general" />
 
     <!--<header
-        android:fragment="com.brunocascio.cualferiado.SettingsActivity$NotificationPreferenceFragment"
+        android:fragment="cualferiado22.SettingsActivity$NotificationPreferenceFragment"
         android:title="@string/pref_header_notifications" />-->
 
     <!--<header
-        android:fragment="com.brunocascio.cualferiado.SettingsActivity$DataSyncPreferenceFragment"
+        android:fragment="cualferiado22.SettingsActivity$DataSyncPreferenceFragment"
         android:title="@string/pref_header_data_sync" />-->
 
 </preference-headers>
